@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.arisurya.jetpack.filmsapp.data.FilmsRepository
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
+import com.arisurya.jetpack.filmsapp.vo.Resource
 
 
 class DetailMovieViewModel(private val filmsRepository: FilmsRepository) : ViewModel() {
@@ -13,6 +14,6 @@ class DetailMovieViewModel(private val filmsRepository: FilmsRepository) : ViewM
         this.movieId = movieId
     }
 
-    fun getMovie(): LiveData<FilmEntity> = filmsRepository.getDetailMovie(movieId.toInt())
+    fun getMovie(): LiveData<Resource<FilmEntity>> = filmsRepository.getDetailMovie(movieId.toInt())
 
 }

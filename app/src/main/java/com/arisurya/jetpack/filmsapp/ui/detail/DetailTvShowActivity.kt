@@ -25,24 +25,24 @@ class DetailTvShowActivity : AppCompatActivity() {
         detailTvShowBinding = activityDetailTvShowBinding.detailContent
         setContentView(activityDetailTvShowBinding.root)
 
-        val factory = ViewModelFactory.getInstance()
-        viewModel = ViewModelProvider(
-            this,
-            factory
-        )[DetailTvShowViewModel::class.java]
-        val extras = intent.extras
-        setProgressBar(true)
-        if (extras != null) {
-            val showId = extras.getString(EXTRA_TV)
-            if (showId != null) {
-                viewModel.setSelectedShow(showId)
-                viewModel.getTvShow().observe(this, { show ->
-                    populateMovie(show)
-                    setProgressBar(false)
-                })
-
-            }
-        }
+//        val factory = ViewModelFactory.getInstance(this)
+//        viewModel = ViewModelProvider(
+//            this,
+//            factory
+//        )[DetailTvShowViewModel::class.java]
+//        val extras = intent.extras
+//        setProgressBar(true)
+//        if (extras != null) {
+//            val showId = extras.getString(EXTRA_TV)
+//            if (showId != null) {
+//                viewModel.setSelectedShow(showId)
+//                viewModel.getTvShow().observe(this, { show ->
+//                    populateMovie(show)
+//                    setProgressBar(false)
+//                })
+//
+//            }
+//        }
     }
 
     private fun populateMovie(show: FilmEntity) {

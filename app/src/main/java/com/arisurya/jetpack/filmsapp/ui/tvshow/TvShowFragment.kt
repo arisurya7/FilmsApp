@@ -37,7 +37,7 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val factory = ViewModelFactory.getInstance()
+            val factory = ViewModelFactory.getInstance(requireActivity())
             viewModel = ViewModelProvider(
                 this,
                 factory
@@ -69,31 +69,31 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.sort_default -> {
-                viewModel.setOptionShow(0)
-                setViewModelTvShow()
-            }
-
-            R.id.sort_rating -> {
-                viewModel.setOptionShow(1)
-                setViewModelTvShow()
-            }
-
-            R.id.sort_title -> {
-                viewModel.setOptionShow(2)
-                setViewModelTvShow()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.sort_default -> {
+//                viewModel.setOptionShow(0)
+//                setViewModelTvShow()
+//            }
+//
+//            R.id.sort_rating -> {
+//                viewModel.setOptionShow(1)
+//                setViewModelTvShow()
+//            }
+//
+//            R.id.sort_title -> {
+//                viewModel.setOptionShow(2)
+//                setViewModelTvShow()
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 
     private fun setViewModelTvShow() {
 
         val tvShowAdapter = TvShowAdapter(this)
         setProgressBar(true)
-        viewModel.getTvShowOptions(viewModel.choose).observe(viewLifecycleOwner, { tvShow ->
+        viewModel.getTvShowOptions(viewModel.choose).observe(this, { tvShow ->
             setProgressBar(false)
             tvShowAdapter.setTvShow(tvShow)
             tvShowAdapter.notifyDataSetChanged()

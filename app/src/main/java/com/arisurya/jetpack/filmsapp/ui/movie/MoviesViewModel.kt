@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.arisurya.jetpack.filmsapp.data.FilmsRepository
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
+import com.arisurya.jetpack.filmsapp.vo.Resource
 
 
 class MoviesViewModel(private val filmsRepository: FilmsRepository) : ViewModel() {
@@ -15,15 +16,15 @@ class MoviesViewModel(private val filmsRepository: FilmsRepository) : ViewModel(
         choose = i
     }
 
-    fun getMoviesDefault(): LiveData<List<FilmEntity>> = filmsRepository.getMovies()
+    fun getMoviesDefault(): LiveData<Resource<List<FilmEntity>>> = filmsRepository.getMovies()
 
-    fun getMoviesSortByRating(): LiveData<List<FilmEntity>> =
+    fun getMoviesSortByRating(): LiveData<Resource<List<FilmEntity>>> =
         filmsRepository.getMoviesSortedByRating()
 
-    fun getMoviesSortByTitle(): LiveData<List<FilmEntity>> =
+    fun getMoviesSortByTitle(): LiveData<Resource<List<FilmEntity>>> =
         filmsRepository.getMoviesSortedByTitle()
 
-    fun getMovieOptions(i: Int): LiveData<List<FilmEntity>> {
+    fun getMovieOptions(i: Int): LiveData<Resource<List<FilmEntity>>> {
         return when (i) {
             1 -> getMoviesSortByRating()
             2 -> getMoviesSortByTitle()

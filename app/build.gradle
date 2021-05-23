@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 def API_KEY = '"' + ApiKey + '"' ?: '"Not Found Api Key"'
 def STRING = 'String'
@@ -78,5 +79,9 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$converterGson"
     implementation "com.squareup.okhttp3:logging-interceptor:$logginInterceptor"
+
+    //database
+    implementation "androidx.room:room-runtime:$roomRuntimeVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
 
 }

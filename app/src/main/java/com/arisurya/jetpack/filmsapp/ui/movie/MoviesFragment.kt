@@ -2,12 +2,14 @@ package com.arisurya.jetpack.filmsapp.ui.movie
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.databinding.FragmentMoviesBinding
 import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
+import com.arisurya.jetpack.filmsapp.vo.Status
 
 
 class MoviesFragment : Fragment() {
@@ -33,12 +35,35 @@ class MoviesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val factory = ViewModelFactory.getInstance()
+            val factory = ViewModelFactory.getInstance(requireActivity())
             viewModel = ViewModelProvider(
                 this,
                 factory
             )[MoviesViewModel::class.java]
-            setViewModelMovie()
+
+            val moviesAdapter = MoviesAdapter()
+            viewModel.getMovieOptions(viewModel.choose).observe(this, { movies ->
+                if (movies != null) {
+                    when (movies.status) {
+                        Status.LOADING -> setProgressBar(true)
+                        Status.SUCCESS -> {
+                            setProgressBar(false)
+                            moviesAdapter.setMovies(movies.data)
+                            moviesAdapter.notifyDataSetChanged()
+                        }
+                        Status.ERROR -> {
+                            setProgressBar(false)
+                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            })
+
+            with(fragmentMoviesBinding.rvMovies) {
+                this.layoutManager = LinearLayoutManager(context)
+                this.setHasFixedSize(true)
+                this.adapter = moviesAdapter
+            }
         }
     }
 
@@ -69,20 +94,30 @@ class MoviesFragment : Fragment() {
     }
 
     private fun setViewModelMovie() {
-
         val moviesAdapter = MoviesAdapter()
         setProgressBar(true)
         viewModel.getMovieOptions(viewModel.choose).observe(viewLifecycleOwner, { movies ->
-            setProgressBar(false)
-            moviesAdapter.setMovies(movies)
-            moviesAdapter.notifyDataSetChanged()
+            if (movies != null) {
+                when (movies.status) {
+                    Status.LOADING -> fragmentMoviesBinding.progressBar.visibility = View.VISIBLE
+                    Status.SUCCESS -> {
+                        fragmentMoviesBinding.progressBar.visibility = View.GONE
+                        moviesAdapter.setMovies(movies.data)
+                        moviesAdapter.notifyDataSetChanged()
+                    }
+                    Status.ERROR -> {
+                        fragmentMoviesBinding.progressBar.visibility = View.GONE
+                        Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         })
 
 
         with(fragmentMoviesBinding.rvMovies) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = moviesAdapter
+            this.layoutManager = LinearLayoutManager(context)
+            this.setHasFixedSize(true)
+            this.adapter = moviesAdapter
         }
     }
 

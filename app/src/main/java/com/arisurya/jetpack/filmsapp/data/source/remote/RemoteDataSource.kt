@@ -1,6 +1,8 @@
 package com.arisurya.jetpack.filmsapp.data.source.remote
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.arisurya.jetpack.filmsapp.BuildConfig
 import com.arisurya.jetpack.filmsapp.data.source.remote.api.ApiConfig
 import com.arisurya.jetpack.filmsapp.data.source.remote.response.*
@@ -18,8 +20,9 @@ class RemoteDataSource {
         private const val TAG = "RemoteDataSource"
     }
 
-    fun getMovies(callback: LoadMoviesCallback) {
+    fun getMovies(): MutableLiveData<ApiResponse<List<ResultsItemMovie>>> {
         EspressoIdlingResource.increment()
+        val resultListMovies = MutableLiveData<ApiResponse<List<ResultsItemMovie>>>()
         val client = ApiConfig.getApiService().getMovies(API_KEY, LANGUAGE, PAGE)
         client.enqueue(object : Callback<MoviesResponse> {
             override fun onResponse(
@@ -28,7 +31,7 @@ class RemoteDataSource {
             ) {
                 if (response.isSuccessful) {
                     val listMovies = response.body()?.results as List<ResultsItemMovie>
-                    callback.onAllMovieReceived(listMovies)
+                    resultListMovies.value = ApiResponse.success(listMovies)
                     EspressoIdlingResource.decrement()
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
@@ -40,10 +43,12 @@ class RemoteDataSource {
             }
 
         })
+        return resultListMovies
     }
 
-    fun getDetailMovie(movieId: Int, callback: LoadDetailMovieCallback) {
+    fun getDetailMovie(movieId: Int): LiveData<ApiResponse<DetailMovieResponse>> {
         EspressoIdlingResource.increment()
+        val resultDetailMovie = MutableLiveData<ApiResponse<DetailMovieResponse>>()
         val client = ApiConfig.getApiService().getDetailMovie(movieId, API_KEY, LANGUAGE)
         client.enqueue(object : Callback<DetailMovieResponse> {
             override fun onResponse(
@@ -53,7 +58,7 @@ class RemoteDataSource {
 
                 if (response.isSuccessful) {
                     val detailMovieResponse = response.body() as DetailMovieResponse
-                    callback.onAllDetailMovieReceived(detailMovieResponse)
+                    resultDetailMovie.value = ApiResponse.success(detailMovieResponse)
                     EspressoIdlingResource.decrement()
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
@@ -66,6 +71,8 @@ class RemoteDataSource {
             }
 
         })
+
+        return resultDetailMovie
     }
 
     fun getTvShows(callback: LoadTvShowCallback) {

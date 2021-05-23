@@ -1,6 +1,7 @@
 package com.arisurya.jetpack.filmsapp.viewmodel
 
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.arisurya.jetpack.filmsapp.data.FilmsRepository
@@ -17,9 +18,9 @@ class ViewModelFactory private constructor(private val mFilmsRepository: FilmsRe
         @Volatile
         private var instance: ViewModelFactory? = null
 
-        fun getInstance(): ViewModelFactory =
+        fun getInstance(context :Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository()).apply {
+                instance ?: ViewModelFactory(Injection.provideRepository(context)).apply {
                     instance = this
                 }
             }

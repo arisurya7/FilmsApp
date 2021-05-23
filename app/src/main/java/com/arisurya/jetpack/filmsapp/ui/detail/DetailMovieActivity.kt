@@ -5,12 +5,14 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.ActivityDetailMovieBinding
 import com.arisurya.jetpack.filmsapp.databinding.ContentDetailMovieBinding
 import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
+import com.arisurya.jetpack.filmsapp.vo.Status
 import com.bumptech.glide.Glide
 
 class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
@@ -28,7 +30,7 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
         detailMovieBinding = activityDetailMovieBinding.detailContent
         setContentView(activityDetailMovieBinding.root)
 
-        val factory = ViewModelFactory.getInstance()
+        val factory = ViewModelFactory.getInstance(this)
 
         viewModel = ViewModelProvider(
             this,
@@ -40,30 +42,42 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
             setProgressBar(true)
             if (movieId != null) {
                 viewModel.setSelectedMovie(movieId)
-                viewModel.getMovie().observe(this, { movie ->
-                    setProgressBar(false)
-                    populateMovie(movie)
+                viewModel.getMovie().observe(this, { movieWithDetail ->
+                    if (movieWithDetail != null) {
+                        when (movieWithDetail.status) {
+                            Status.LOADING -> setProgressBar(true)
+                            Status.SUCCESS -> {
+                                setProgressBar(false)
+                                populateMovie(movieWithDetail.data)
+                            }
+                            Status.ERROR -> {
+                                setProgressBar(false)
+                                Toast.makeText(this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+
                 })
             }
         }
     }
 
-    private fun populateMovie(movie: FilmEntity) {
-        detailMovieBinding.tvMovieTitle.text = movie.title
-        detailMovieBinding.tvMovieRating.text = movie.rating.toString()
-        detailMovieBinding.tvMovieReleased.text = movie.released
-        detailMovieBinding.tvMovieDuration.text = movie.duration
-        detailMovieBinding.tvMovieDesc.text = movie.description
-        detailMovieBinding.tvMovieLanguage.text = movie.language
+    private fun populateMovie(movie: FilmEntity?) {
+        detailMovieBinding.tvMovieTitle.text = movie?.title
+        detailMovieBinding.tvMovieRating.text = movie?.rating.toString()
+        detailMovieBinding.tvMovieReleased.text = movie?.released
+        detailMovieBinding.tvMovieDuration.text = movie?.duration
+        detailMovieBinding.tvMovieDesc.text = movie?.description
+        detailMovieBinding.tvMovieLanguage.text = movie?.language
         detailMovieBinding.btnVisitMovie.setOnClickListener(this)
         detailMovieBinding.btnShare.setOnClickListener(this)
 
         Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185${movie.imagePath}")
+            .load("https://image.tmdb.org/t/p/w185${movie?.imagePath}")
             .into(detailMovieBinding.imgBgDetail)
 
         Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185${movie.imagePath}")
+            .load("https://image.tmdb.org/t/p/w185${movie?.imagePath}")
             .into(detailMovieBinding.imgMoviePoster)
 
     }
@@ -81,7 +95,7 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun visitMovie() {
         viewModel.getMovie().observe(this, { movie ->
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(movie.link)))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(movie.data?.link)))
         })
 
     }
@@ -90,13 +104,13 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.getMovie().observe(this, { movie ->
             val message = """
             [Lets Watching]
-            Title           : ${movie.title}
-            Rating          : ${movie.rating}
-            Duration        : ${movie.duration}
-            Released        : ${movie.released}
-            Language        : ${movie.language}
-            Description     : ${movie.description}
-            Link            : ${movie.link}
+            Title           : ${movie.data?.title}
+            Rating          : ${movie.data?.rating}
+            Duration        : ${movie.data?.duration}
+            Released        : ${movie.data?.released}
+            Language        : ${movie.data?.language}
+            Description     : ${movie.data?.description}
+            Link            : ${movie.data?.link}
 
             Download FilmApps
         """.trimIndent()
