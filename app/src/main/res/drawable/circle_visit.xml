@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress AndroidUnknownAttribute -->
+<ripple android:color="@color/customYellow"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <stroke android:color="@color/colorAccent"
+                android:width="2dp"/>
+            <solid android:color="@color/colorAccent" />
+        </shape>
+    </item>
+</ripple>

@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">FilmsApp</string>
+    <string name="movies">Movies</string>
+    <string name="tv_Show">Tv Shows</string>
+    <string name="button_visit">button visit</string>
+    <string name="button_share">button share</string>
+    <string name="background_image">background image</string>
+    <string name="title">Title</string>
+    <string name="_0_0">0.0</string>
+    <string name="_0000_00_00" tools:ignore="TypographyDashes">0000–00-00</string>
+    <string name="_0h_0m">0h 0m</string>
+    <string name="language">Language</string>
+    <string name="description">Description :</string>
+    <string name="description_text">Description Text</string>
+    <string name="share">Share</string>
+    <string name="visit">Visit</string>
+    <string name="sort_by_default">Sort by Default</string>
+    <string name="sort_by_rating">Sort by Rating</string>
+    <string name="sort_by_title">Sort by Title</string>
+</resources>

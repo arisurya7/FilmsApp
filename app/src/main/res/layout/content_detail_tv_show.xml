@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/BgParent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:descendantFocusability="blocksDescendants">
+
+    <!--suppress AndroidUnknownAttribute -->
+    <ImageView
+        android:id="@+id/img_bg_detail"
+        android:layout_width="match_parent"
+        android:layout_height="480dp"
+        android:alpha="0.2"
+        android:contentDescription="@string/background_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_baseline_image_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_helper"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_marginTop="400dp"
+        android:src="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/SpecificCornerRoundedTop" />
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_bg_detail_first"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/colorSecondary"
+        app:layout_constraintBottom_toTopOf="@+id/divider2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:shapeAppearanceOverlay="@style/RoundedSquare2" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_bg_detail_second"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/colorSecondary"
+        app:layout_constraintBottom_toTopOf="@+id/divider4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider3"
+        app:shapeAppearanceOverlay="@style/RoundedSquare2" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_show_poster"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="32dp"
+        android:src="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedSquare" />
+
+    <TextView
+        android:id="@+id/tv_show_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/title"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/img_helper" />
+
+    <TextView
+        android:id="@+id/tv_show_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_italic"
+        android:text="@string/_0_0"
+        android:textColor="@color/customYellow"
+        android:textSize="16sp"
+        app:drawableStartCompat="@drawable/ic_baseline_star_24"
+        app:layout_constraintStart_toStartOf="@+id/tv_show_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_show_title" />
+
+    <TextView
+        android:id="@+id/tv_show_released"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="@string/_0000_00_00"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+        app:drawableStartCompat="@drawable/ic_baseline_date_range_24"
+        app:layout_constraintStart_toStartOf="@+id/tv_show_rating"
+        app:layout_constraintTop_toBottomOf="@+id/tv_show_rating" />
+
+    <TextView
+        android:id="@+id/tv_show_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="@string/_0h_0m"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+        app:drawableStartCompat="@drawable/ic_baseline_play_arrow_24"
+        app:layout_constraintStart_toStartOf="@+id/tv_show_released"
+        app:layout_constraintTop_toBottomOf="@+id/tv_show_released" />
+
+    <TextView
+        android:id="@+id/tv_show_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="@string/language"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+        app:drawableStartCompat="@drawable/ic_baseline_g_translate_24"
+        app:layout_constraintStart_toStartOf="@+id/tv_show_duration"
+        app:layout_constraintTop_toBottomOf="@+id/tv_show_duration" />
+
+    <TextView
+        android:id="@+id/tv_show_desc_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="@string/description"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_show_language"
+        app:layout_constraintTop_toBottomOf="@+id/tv_show_language" />
+
+    <TextView
+        android:id="@+id/tv_show_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="40dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:text="@string/description_text"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_show_desc_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_show_desc_title" />
+
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="296dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="16dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/tv_show_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_show_title" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="296dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintStart_toStartOf="@+id/tv_show_language"
+        app:layout_constraintTop_toBottomOf="@+id/tv_show_language" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="296dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="20dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/tv_show_desc_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_show_desc_title" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="296dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintStart_toStartOf="@+id/tv_show_desc"
+        app:layout_constraintTop_toBottomOf="@+id/tv_show_desc" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

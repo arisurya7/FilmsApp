@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv_item_movies"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginRight="16dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/list_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ripple_items"
+        android:paddingEnd="16dp"
+        tools:ignore="RtlSymmetry">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/circle_shadow"
+            android:layout_width="95dp"
+            android:layout_height="120dp"
+            android:src="@color/colorAccentOpacity50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/SpecificCornerRounded" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="85dp"
+            android:layout_height="120dp"
+            android:src="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/SpecificCornerRounded" />
+
+        <!--suppress AndroidUnknownAttribute -->
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_movie_poster"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_baseline_image_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/SpecificCornerRounded" />
+
+        <!--suppress AndroidUnknownAttribute -->
+        <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_regular"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/circleImageView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Name" />
+
+        <TextView
+            android:id="@+id/tv_movie_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat_italic"
+            android:textColor="#FFEB3B"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:drawableStartCompat="@drawable/ic_baseline_star_24"
+            app:layout_constraintStart_toStartOf="@+id/circle_shadow"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
+            tools:text="8.0" />
+
+        <!--suppress AndroidUnknownAttribute -->
+        <TextView
+            android:id="@+id/tv_movie_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_regular"
+            android:maxLines="2"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_movie_rating"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movie_rating"
+            tools:text="Description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
