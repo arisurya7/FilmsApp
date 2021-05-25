@@ -37,5 +37,8 @@ data class FilmEntity(
     var imagePath: String="",
 
     @ColumnInfo(name = "link")
-    var link: String=""
+    var link: String="",
+
+    @ColumnInfo(name = "favorite")
+    var favorite: Boolean=false
 )

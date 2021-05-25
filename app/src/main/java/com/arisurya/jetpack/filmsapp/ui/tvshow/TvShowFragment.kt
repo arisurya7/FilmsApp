@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.FragmentTvShowBinding
+import com.arisurya.jetpack.filmsapp.ui.favorite.FavoriteActivity
 import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
 import com.arisurya.jetpack.filmsapp.vo.Status
 
@@ -86,6 +87,9 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
             R.id.sort_title -> {
                 viewModel.setOptionShow(2)
                 setViewModelTvShow()
+            }
+            R.id.fav->{
+                startActivity(Intent (activity, FavoriteActivity::class.java))
             }
         }
         return super.onOptionsItemSelected(item)

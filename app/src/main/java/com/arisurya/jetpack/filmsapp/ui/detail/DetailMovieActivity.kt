@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
+import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.ActivityDetailMovieBinding
 import com.arisurya.jetpack.filmsapp.databinding.ContentDetailMovieBinding
@@ -42,13 +43,15 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
             setProgressBar(true)
             if (movieId != null) {
                 viewModel.setSelectedMovie(movieId)
-                viewModel.getMovie().observe(this, { movieWithDetail ->
+                viewModel.detailMovie.observe(this, { movieWithDetail ->
                     if (movieWithDetail != null) {
                         when (movieWithDetail.status) {
                             Status.LOADING -> setProgressBar(true)
                             Status.SUCCESS -> {
                                 setProgressBar(false)
                                 populateMovie(movieWithDetail.data)
+                                val state = movieWithDetail.data?.favorite
+                                state?.let { setFavoriteState(it) }
                             }
                             Status.ERROR -> {
                                 setProgressBar(false)
@@ -71,6 +74,7 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
         detailMovieBinding.tvMovieLanguage.text = movie?.language
         detailMovieBinding.btnVisitMovie.setOnClickListener(this)
         detailMovieBinding.btnShare.setOnClickListener(this)
+        detailMovieBinding.btnFav.setOnClickListener(this)
 
         Glide.with(this)
             .load("https://image.tmdb.org/t/p/w185${movie?.imagePath}")
@@ -90,18 +94,23 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
             detailMovieBinding.btnVisitMovie -> {
                 visitMovie()
             }
+            detailMovieBinding.btnFav->{
+                if(viewModel.detailMovie.value?.data?.favorite == true)showToastRemoveFromFavorite()
+                else showToastAddToFavorite()
+                viewModel.setMovieFavorite()
+            }
         }
     }
 
     private fun visitMovie() {
-        viewModel.getMovie().observe(this, { movie ->
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(movie.data?.link)))
-        })
 
+        viewModel.detailMovie.observe(this, { movie ->
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/movie/${movie.data?.filmId}")))
+        })
     }
 
     private fun shareMovie() {
-        viewModel.getMovie().observe(this, { movie ->
+        viewModel.detailMovie.observe(this, { movie ->
             val message = """
             [Lets Watching]
             Title           : ${movie.data?.title}
@@ -136,5 +145,33 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun setFavoriteState(state: Boolean){
+        if(state)
+            detailMovieBinding.btnFav.setImageResource(R.drawable.ic_favorite_full)
+        else
+            detailMovieBinding.btnFav.setImageResource(R.drawable.ic_favorite_outline)
+    }
+
+    private fun showToastAddToFavorite(){
+        val toastView = layoutInflater.inflate(
+            R.layout.toast_success_layout, findViewById(R.id.toast_add)
+        )
+        with(Toast(applicationContext)){
+            duration = Toast.LENGTH_SHORT
+            view = toastView
+            show()
+        }
+    }
+
+    private fun showToastRemoveFromFavorite(){
+        val toastView = layoutInflater.inflate(
+            R.layout.toast_failed_layout, findViewById(R.id.toast_remove)
+        )
+        with(Toast(applicationContext)){
+            duration = Toast.LENGTH_SHORT
+            view = toastView
+            show()
+        }
+    }
 
 }

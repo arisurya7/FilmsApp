@@ -1,5 +1,6 @@
 package com.arisurya.jetpack.filmsapp.ui.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.databinding.FragmentMoviesBinding
+import com.arisurya.jetpack.filmsapp.ui.favorite.FavoriteActivity
 import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
 import com.arisurya.jetpack.filmsapp.vo.Status
 
@@ -86,6 +88,9 @@ class MoviesFragment : Fragment() {
             R.id.sort_title -> {
                 viewModel.setOption(2)
                 setViewModelMovie()
+            }
+            R.id.fav->{
+                startActivity(Intent (activity, FavoriteActivity::class.java))
             }
         }
 

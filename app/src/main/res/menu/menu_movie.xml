@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/fav"
+        android:title="Favorite"
+        android:icon="@drawable/ic_fav_green"
+        app:showAsAction="always"/>
+    <item
         android:id="@+id/sort_default"
         android:title="@string/sort_by_default"
         app:showAsAction="never"/>

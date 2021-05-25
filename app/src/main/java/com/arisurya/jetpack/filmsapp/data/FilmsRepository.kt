@@ -157,7 +157,7 @@ class FilmsRepository private constructor(
                         description = response.overview,
                         tvShow = true,
                         imagePath = response.posterPath,
-                        link = "https://www.themoviedb.org/movie/${response.id}"
+                        link = "https://www.themoviedb.org/tv/${response.id}"
                     )
                     tvList.add(movie)
                 }
@@ -227,6 +227,15 @@ class FilmsRepository private constructor(
 
         }.asLiveData()
     }
+
+    override fun getFavoriteMovies(): LiveData<List<FilmEntity>> =
+        localDataSource.getMovieFavorite()
+
+    override fun getFavoriteTvShows(): LiveData<List<FilmEntity>> =
+        localDataSource.getTvShowFavorite()
+
+    override fun setFavoriteFilm(film: FilmEntity, state: Boolean) =
+        appExecutors.diskIO().execute{localDataSource.setFavoriteFilm(film, state)}
 
     fun convertIntToDurationFormat(minute: Int): String {
         return if (minute == 0) {

@@ -20,10 +20,6 @@ class LocalDataSource private constructor(private val mFilmDao: FilmDao) {
 
     fun insertFilm(film: List<FilmEntity>) = mFilmDao.insertFilms(film)
 
-    fun updateFilm(film: FilmEntity) {
-        mFilmDao.updateFilm(film)
-    }
-
     fun updateDetailFilm(released: String, duration: String, language: String, filmId: String) {
         mFilmDao.updateFilmByDetail(released, duration, language, filmId)
     }
@@ -35,4 +31,14 @@ class LocalDataSource private constructor(private val mFilmDao: FilmDao) {
     fun getTvShowSortByRating(): LiveData<List<FilmEntity>> = mFilmDao.getTvShowSortRating()
 
     fun getTvShowSortByTitle(): LiveData<List<FilmEntity>> = mFilmDao.getTvShowSortTitle()
+
+    fun getMovieFavorite(): LiveData<List<FilmEntity>> = mFilmDao.getFavoriteMovies()
+
+    fun getTvShowFavorite(): LiveData<List<FilmEntity>> = mFilmDao.getFavoriteTvShows()
+
+    fun setFavoriteFilm(film: FilmEntity, newState:Boolean){
+        film.favorite = newState
+        mFilmDao.updateFilmByFavorite(film)
+    }
+
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.ActivityDetailTvShowBinding
 import com.arisurya.jetpack.filmsapp.databinding.ContentDetailTvShowBinding
@@ -12,7 +13,7 @@ import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
 import com.arisurya.jetpack.filmsapp.vo.Status
 import com.bumptech.glide.Glide
 
-class DetailTvShowActivity : AppCompatActivity() {
+class DetailTvShowActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
         const val EXTRA_TV = "extra_tv"
     }
@@ -38,13 +39,14 @@ class DetailTvShowActivity : AppCompatActivity() {
             val showId = extras.getString(EXTRA_TV)
             if (showId != null) {
                 viewModel.setSelectedShow(showId)
-                viewModel.getTvShow().observe(this, { show ->
+                viewModel.detailTvShow.observe(this, { show ->
                     if(show!=null){
                         when(show.status){
                             Status.LOADING -> setProgressBar(true)
                             Status.SUCCESS -> {
                                 setProgressBar(false)
                                 populateMovie(show.data)
+                                show.data?.let { setFavoriteState(it.favorite) }
                             }
                             Status.ERROR -> {
                                 setProgressBar(false)
@@ -65,6 +67,7 @@ class DetailTvShowActivity : AppCompatActivity() {
         detailTvShowBinding.tvShowDuration.text = show?.duration
         detailTvShowBinding.tvShowDesc.text = show?.description
         detailTvShowBinding.tvShowLanguage.text = show?.language
+        detailTvShowBinding.btnFav.setOnClickListener(this)
 
         Glide.with(this)
             .load("https://image.tmdb.org/t/p/w185${show?.imagePath}")
@@ -82,6 +85,43 @@ class DetailTvShowActivity : AppCompatActivity() {
         } else {
             activityDetailTvShowBinding.progressBar.visibility = View.GONE
             activityDetailTvShowBinding.content.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when(v){
+            detailTvShowBinding.btnFav->{
+                if(viewModel.detailTvShow.value?.data?.favorite == true)showToastRemoveFromFavorite()
+                else showToastAddToFavorite()
+                viewModel.setTvShowFavorite()
+            }
+        }
+    }
+
+    private fun setFavoriteState(state: Boolean){
+        if(state) detailTvShowBinding.btnFav.setImageResource(R.drawable.ic_favorite_full)
+        else detailTvShowBinding.btnFav.setImageResource(R.drawable.ic_favorite_outline)
+    }
+
+    private fun showToastAddToFavorite(){
+        val toastView = layoutInflater.inflate(
+            R.layout.toast_success_layout, findViewById(R.id.toast_add)
+        )
+        with(Toast(applicationContext)){
+            duration = Toast.LENGTH_SHORT
+            view = toastView
+            show()
+        }
+    }
+
+    private fun showToastRemoveFromFavorite(){
+        val toastView = layoutInflater.inflate(
+            R.layout.toast_failed_layout, findViewById(R.id.toast_remove)
+        )
+        with(Toast(applicationContext)){
+            duration = Toast.LENGTH_SHORT
+            view = toastView
+            show()
         }
     }
 }

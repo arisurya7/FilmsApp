@@ -15,4 +15,7 @@ interface FilmsDataSource {
     fun getTvShowsSortedByRating(): LiveData<Resource<List<FilmEntity>>>
     fun getTvShowsSortedByTitle(): LiveData<Resource<List<FilmEntity>>>
     fun getDetailTvShow(tvShowId: Int): LiveData<Resource<FilmEntity>>
+    fun getFavoriteMovies():LiveData<List<FilmEntity>>
+    fun getFavoriteTvShows():LiveData<List<FilmEntity>>
+    fun setFavoriteFilm(filmEntity: FilmEntity, state:Boolean)
 }

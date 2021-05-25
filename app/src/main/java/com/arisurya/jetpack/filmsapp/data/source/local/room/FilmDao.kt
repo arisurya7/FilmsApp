@@ -30,11 +30,19 @@ interface FilmDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFilms(film: List<FilmEntity>)
 
-
     @Update
     fun updateFilm(film: FilmEntity)
 
+    @Update
+    fun updateFilmByFavorite(film: FilmEntity)
+
     @Query("UPDATE filmentities SET released=:released, duration=:duration, language=:language WHERE filmId=:filmId")
     fun updateFilmByDetail(released: String, duration: String, language: String, filmId: String)
+
+    @Query("SELECT * FROM filmentities WHERE tvShow = 0 AND favorite =1")
+    fun getFavoriteMovies(): LiveData<List<FilmEntity>>
+
+    @Query("SELECT * FROM filmentities WHERE tvShow = 1 AND favorite =1")
+    fun getFavoriteTvShows(): LiveData<List<FilmEntity>>
 
 }
