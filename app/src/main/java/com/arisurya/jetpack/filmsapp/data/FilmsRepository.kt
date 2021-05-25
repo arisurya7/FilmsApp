@@ -135,104 +135,97 @@ class FilmsRepository private constructor(
         }.asLiveData()
     }
 
-    override fun getTvShows(): LiveData<List<FilmEntity>> {
-        val tvShowResults = MutableLiveData<List<FilmEntity>>()
-        remoteDataSource.getTvShows(object : RemoteDataSource.LoadTvShowCallback {
-            override fun onAllTvShowReceived(tvShowResponse: List<ResultsItemTvShow>) {
-                val tvShowList = ArrayList<FilmEntity>()
-                for (response in tvShowResponse) {
-                    val tvShow = FilmEntity(
+    override fun getTvShows(): LiveData<Resource<List<FilmEntity>>> {
+        return object :
+            NetworkBoundResource<List<FilmEntity>, List<ResultsItemTvShow>>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<FilmEntity>> =
+                localDataSource.getTvShows()
+
+            override fun shouldFetch(data: List<FilmEntity>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun createCall(): LiveData<ApiResponse<List<ResultsItemTvShow>>> =
+                remoteDataSource.getTvShows()
+
+            override fun saveCallResult(tvResponse: List<ResultsItemTvShow>) {
+                val tvList = ArrayList<FilmEntity>()
+                for (response in tvResponse) {
+                    val movie = FilmEntity(
                         filmId = response.id.toString(),
                         title = response.name,
                         rating = response.voteAverage,
                         description = response.overview,
                         tvShow = true,
                         imagePath = response.posterPath,
-                        link = "https://www.themoviedb.org/tv/${response.id}"
+                        link = "https://www.themoviedb.org/movie/${response.id}"
                     )
-                    tvShowList.add(tvShow)
+                    tvList.add(movie)
                 }
-                tvShowResults.postValue(tvShowList)
+                localDataSource.insertFilm(tvList)
             }
 
-        })
-        return tvShowResults
+        }.asLiveData()
     }
 
-    override fun getTvShowsSortedByRating(): LiveData<List<FilmEntity>> {
-        val tvShowResults = MutableLiveData<List<FilmEntity>>()
-        remoteDataSource.getTvShows(object : RemoteDataSource.LoadTvShowCallback {
-            override fun onAllTvShowReceived(tvShowResponse: List<ResultsItemTvShow>) {
-                val tvShowList = ArrayList<FilmEntity>()
-                for (response in tvShowResponse) {
-                    val tvShow = FilmEntity(
-                        filmId = response.id.toString(),
-                        title = response.name,
-                        rating = response.voteAverage,
-                        description = response.overview,
-                        tvShow = true,
-                        imagePath = response.posterPath,
-                        link = "https://www.themoviedb.org/tv/${response.id}"
+    override fun getTvShowsSortedByRating(): LiveData<Resource<List<FilmEntity>>> {
+        return object :
+            NetworkBoundResource<List<FilmEntity>, List<ResultsItemTvShow>>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<FilmEntity>> =
+                localDataSource.getTvShowSortByRating()
 
-                    )
-                    tvShowList.add(tvShow)
-                }
-                tvShowResults.postValue(tvShowList.sortedWith(compareByDescending { it.rating }))
+            override fun shouldFetch(data: List<FilmEntity>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun createCall(): LiveData<ApiResponse<List<ResultsItemTvShow>>> =
+                remoteDataSource.getTvShows()
+
+            override fun saveCallResult(moviesResponse: List<ResultsItemTvShow>) {
+                localDataSource.getTvShowSortByRating()
             }
 
-        })
-        return tvShowResults
+        }.asLiveData()
     }
 
-    override fun getTvShowsSortedByTitle(): LiveData<List<FilmEntity>> {
-        val tvShowResults = MutableLiveData<List<FilmEntity>>()
-        remoteDataSource.getTvShows(object : RemoteDataSource.LoadTvShowCallback {
-            override fun onAllTvShowReceived(tvShowResponse: List<ResultsItemTvShow>) {
-                val tvShowList = ArrayList<FilmEntity>()
-                for (response in tvShowResponse) {
-                    val tvShow = FilmEntity(
-                        filmId = response.id.toString(),
-                        title = response.name,
-                        rating = response.voteAverage,
-                        description = response.overview,
-                        tvShow = true,
-                        imagePath = response.posterPath,
-                        link = "https://www.themoviedb.org/tv/${response.id}"
-                    )
-                    tvShowList.add(tvShow)
-                }
-                tvShowResults.postValue(tvShowList.sortedWith(compareBy { it.title }))
+    override fun getTvShowsSortedByTitle(): LiveData<Resource<List<FilmEntity>>> {
+        return object :
+            NetworkBoundResource<List<FilmEntity>, List<ResultsItemTvShow>>(appExecutors) {
+            override fun loadFromDB(): LiveData<List<FilmEntity>> =
+                localDataSource.getTvShowSortByTitle()
+
+            override fun shouldFetch(data: List<FilmEntity>?): Boolean =
+                data == null || data.isEmpty()
+
+            override fun createCall(): LiveData<ApiResponse<List<ResultsItemTvShow>>> =
+                remoteDataSource.getTvShows()
+
+            override fun saveCallResult(moviesResponse: List<ResultsItemTvShow>) {
+                localDataSource.getTvShowSortByTitle()
             }
 
-        })
-        return tvShowResults
-
+        }.asLiveData()
     }
 
-    override fun getDetailTvShow(tvShowId: Int): LiveData<FilmEntity> {
-        val detailTvShow = MutableLiveData<FilmEntity>()
-        remoteDataSource.getDetailTvShow(
-            tvShowId,
-            object : RemoteDataSource.LoadDetailTvShowCallback {
-                override fun onAllDetailTvShowReceived(detailTvShowResponse: DetailTvShowResponse) {
-                    val tvShow = FilmEntity(
-                        detailTvShowResponse.id.toString(),
-                        detailTvShowResponse.name,
-                        detailTvShowResponse.voteAverage,
-                        detailTvShowResponse.overview,
-                        true,
-                        convertIntToDurationFormat(if (detailTvShowResponse.episodeRunTime.isEmpty()) 0 else detailTvShowResponse.episodeRunTime[0]),
-                        detailTvShowResponse.firstAirDate,
-                        Locale(detailTvShowResponse.originalLanguage).displayName,
-                        detailTvShowResponse.posterPath,
-                        "https://www.themoviedb.org/tv/${detailTvShowResponse.id}"
-                    )
-                    detailTvShow.postValue(tvShow)
-                }
+    override fun getDetailTvShow(tvShowId: Int): LiveData<Resource<FilmEntity>> {
 
-            })
-        return detailTvShow
+        return object : NetworkBoundResource<FilmEntity, DetailTvShowResponse>(appExecutors) {
+            override fun loadFromDB(): LiveData<FilmEntity> =
+                localDataSource.getDetailFilm(tvShowId.toString())
 
+            override fun shouldFetch(data: FilmEntity?): Boolean =
+                data?.released == ""
+
+            override fun createCall(): LiveData<ApiResponse<DetailTvShowResponse>> =
+                remoteDataSource.getDetailTvShow(tvShowId)
+
+            override fun saveCallResult(data: DetailTvShowResponse) =
+                localDataSource.updateDetailFilm(
+                    data.firstAirDate,
+                    convertIntToDurationFormat(if (data.episodeRunTime.isEmpty()) 0 else data.episodeRunTime[0]),
+                    Locale(data.originalLanguage).displayName,
+                    tvShowId.toString()
+                )
+
+        }.asLiveData()
     }
 
     fun convertIntToDurationFormat(minute: Int): String {

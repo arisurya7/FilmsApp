@@ -18,6 +18,12 @@ interface FilmDao {
     @Query("SELECT * FROM filmentities WHERE tvShow=1")
     fun getTvShows(): LiveData<List<FilmEntity>>
 
+    @Query("SELECT * FROM filmentities WHERE tvShow=1 ORDER BY rating DESC")
+    fun getTvShowSortRating(): LiveData<List<FilmEntity>>
+
+    @Query("SELECT * FROM filmentities WHERE tvShow=1 ORDER BY title ASC")
+    fun getTvShowSortTitle(): LiveData<List<FilmEntity>>
+
     @Query("SELECT * FROM filmentities WHERE filmId = :filmId")
     fun getDetailFilm(filmId: String): LiveData<FilmEntity>
 

@@ -31,4 +31,8 @@ class LocalDataSource private constructor(private val mFilmDao: FilmDao) {
     fun getMoviesSortByRating(): LiveData<List<FilmEntity>> = mFilmDao.getMoviesSortRating()
 
     fun getMoviesSortByTitle(): LiveData<List<FilmEntity>> = mFilmDao.getMoviesSortTitle()
+
+    fun getTvShowSortByRating(): LiveData<List<FilmEntity>> = mFilmDao.getTvShowSortRating()
+
+    fun getTvShowSortByTitle(): LiveData<List<FilmEntity>> = mFilmDao.getTvShowSortTitle()
 }

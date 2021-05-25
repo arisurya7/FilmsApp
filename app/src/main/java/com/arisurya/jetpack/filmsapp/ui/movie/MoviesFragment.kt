@@ -99,14 +99,14 @@ class MoviesFragment : Fragment() {
         viewModel.getMovieOptions(viewModel.choose).observe(viewLifecycleOwner, { movies ->
             if (movies != null) {
                 when (movies.status) {
-                    Status.LOADING -> fragmentMoviesBinding.progressBar.visibility = View.VISIBLE
+                    Status.LOADING -> setProgressBar(true)
                     Status.SUCCESS -> {
-                        fragmentMoviesBinding.progressBar.visibility = View.GONE
+                        setProgressBar(false)
                         moviesAdapter.setMovies(movies.data)
                         moviesAdapter.notifyDataSetChanged()
                     }
                     Status.ERROR -> {
-                        fragmentMoviesBinding.progressBar.visibility = View.GONE
+                        setProgressBar(false)
                         Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
                     }
                 }

@@ -3,11 +3,13 @@ package com.arisurya.jetpack.filmsapp.ui.detail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.ActivityDetailTvShowBinding
 import com.arisurya.jetpack.filmsapp.databinding.ContentDetailTvShowBinding
 import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
+import com.arisurya.jetpack.filmsapp.vo.Status
 import com.bumptech.glide.Glide
 
 class DetailTvShowActivity : AppCompatActivity() {
@@ -25,40 +27,51 @@ class DetailTvShowActivity : AppCompatActivity() {
         detailTvShowBinding = activityDetailTvShowBinding.detailContent
         setContentView(activityDetailTvShowBinding.root)
 
-//        val factory = ViewModelFactory.getInstance(this)
-//        viewModel = ViewModelProvider(
-//            this,
-//            factory
-//        )[DetailTvShowViewModel::class.java]
-//        val extras = intent.extras
-//        setProgressBar(true)
-//        if (extras != null) {
-//            val showId = extras.getString(EXTRA_TV)
-//            if (showId != null) {
-//                viewModel.setSelectedShow(showId)
-//                viewModel.getTvShow().observe(this, { show ->
-//                    populateMovie(show)
-//                    setProgressBar(false)
-//                })
-//
-//            }
-//        }
+        val factory = ViewModelFactory.getInstance(this)
+        viewModel = ViewModelProvider(
+            this,
+            factory
+        )[DetailTvShowViewModel::class.java]
+        val extras = intent.extras
+        setProgressBar(true)
+        if (extras != null) {
+            val showId = extras.getString(EXTRA_TV)
+            if (showId != null) {
+                viewModel.setSelectedShow(showId)
+                viewModel.getTvShow().observe(this, { show ->
+                    if(show!=null){
+                        when(show.status){
+                            Status.LOADING -> setProgressBar(true)
+                            Status.SUCCESS -> {
+                                setProgressBar(false)
+                                populateMovie(show.data)
+                            }
+                            Status.ERROR -> {
+                                setProgressBar(false)
+                                Toast.makeText(this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                })
+
+            }
+        }
     }
 
-    private fun populateMovie(show: FilmEntity) {
-        detailTvShowBinding.tvShowTitle.text = show.title
-        detailTvShowBinding.tvShowRating.text = show.rating.toString()
-        detailTvShowBinding.tvShowReleased.text = show.released
-        detailTvShowBinding.tvShowDuration.text = show.duration
-        detailTvShowBinding.tvShowDesc.text = show.description
-        detailTvShowBinding.tvShowLanguage.text = show.language
+    private fun populateMovie(show: FilmEntity?) {
+        detailTvShowBinding.tvShowTitle.text = show?.title
+        detailTvShowBinding.tvShowRating.text = show?.rating.toString()
+        detailTvShowBinding.tvShowReleased.text = show?.released
+        detailTvShowBinding.tvShowDuration.text = show?.duration
+        detailTvShowBinding.tvShowDesc.text = show?.description
+        detailTvShowBinding.tvShowLanguage.text = show?.language
 
         Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185${show.imagePath}")
+            .load("https://image.tmdb.org/t/p/w185${show?.imagePath}")
             .into(detailTvShowBinding.imgBgDetail)
 
         Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185${show.imagePath}")
+            .load("https://image.tmdb.org/t/p/w185${show?.imagePath}")
             .into(detailTvShowBinding.imgShowPoster)
     }
 

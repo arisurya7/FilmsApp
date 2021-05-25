@@ -75,8 +75,9 @@ class RemoteDataSource {
         return resultDetailMovie
     }
 
-    fun getTvShows(callback: LoadTvShowCallback) {
+    fun getTvShows(): MutableLiveData<ApiResponse<List<ResultsItemTvShow>>> {
         EspressoIdlingResource.increment()
+        val resultListTvShow = MutableLiveData<ApiResponse<List<ResultsItemTvShow>>>()
         val client = ApiConfig.getApiService().getTvShow(API_KEY, LANGUAGE, PAGE)
         client.enqueue(object : Callback<TvShowResponse> {
             override fun onResponse(
@@ -85,7 +86,7 @@ class RemoteDataSource {
             ) {
                 if (response.isSuccessful) {
                     val listTvShow = response.body()?.results as List<ResultsItemTvShow>
-                    callback.onAllTvShowReceived(listTvShow)
+                    resultListTvShow.value = ApiResponse.success(listTvShow)
                     EspressoIdlingResource.decrement()
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
@@ -99,10 +100,13 @@ class RemoteDataSource {
             }
 
         })
+
+        return resultListTvShow
     }
 
-    fun getDetailTvShow(tvShowId: Int, callback: LoadDetailTvShowCallback) {
+    fun getDetailTvShow(tvShowId: Int) : LiveData<ApiResponse<DetailTvShowResponse>> {
         EspressoIdlingResource.increment()
+        val resultDetailTvShow = MutableLiveData<ApiResponse<DetailTvShowResponse>>()
         val client = ApiConfig.getApiService().getDetailTvShow(tvShowId, API_KEY, LANGUAGE)
         client.enqueue(object : Callback<DetailTvShowResponse> {
             override fun onResponse(
@@ -112,7 +116,7 @@ class RemoteDataSource {
 
                 if (response.isSuccessful) {
                     val detailTvShowResponse = response.body() as DetailTvShowResponse
-                    callback.onAllDetailTvShowReceived(detailTvShowResponse)
+                    resultDetailTvShow.value = ApiResponse.success(detailTvShowResponse)
                     EspressoIdlingResource.decrement()
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
@@ -125,6 +129,8 @@ class RemoteDataSource {
             }
 
         })
+
+        return resultDetailTvShow
     }
 
 
