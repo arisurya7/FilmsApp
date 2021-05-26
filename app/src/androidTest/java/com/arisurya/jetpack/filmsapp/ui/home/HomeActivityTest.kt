@@ -2,8 +2,7 @@ package com.arisurya.jetpack.filmsapp.ui.home
 
 
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
+import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -211,6 +210,20 @@ class HomeActivityTest {
                 20
             )
         )
+    }
+
+    @Test
+    fun loadFavoriteMovie() {
+        onView(withId(R.id.fav)).perform(click())
+        onView(withId(R.id.rv_fav_movies)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun loadFavoriteTvShow() {
+        onView(withText(R.string.tv_Show)).perform(click())
+        onView(withId(R.id.fav)).perform(click())
+        onView(withText(R.string.tv_Show)).perform(click())
+        onView(withId(R.id.rv_fav_tv_show)).check(matches(isDisplayed()))
     }
 
 }
