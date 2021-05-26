@@ -278,8 +278,8 @@ class FilmsRepository private constructor(
     override fun getFavoriteTvShows(): LiveData<PagedList<FilmEntity>> {
         val config = PagedList.Config.Builder()
             .setEnablePlaceholders(false)
-            .setInitialLoadSizeHint(3)
-            .setPageSize(3)
+            .setInitialLoadSizeHint(4)
+            .setPageSize(4)
             .build()
         return LivePagedListBuilder(localDataSource.getTvShowFavorite(), config).build()
     }
