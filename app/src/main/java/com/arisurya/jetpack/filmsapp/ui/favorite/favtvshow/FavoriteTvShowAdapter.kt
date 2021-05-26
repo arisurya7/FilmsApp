@@ -3,13 +3,29 @@ package com.arisurya.jetpack.filmsapp.ui.favorite.favtvshow
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.ListItemsMoviesBinding
 import com.arisurya.jetpack.filmsapp.ui.detail.DetailMovieActivity
+import com.arisurya.jetpack.filmsapp.ui.detail.DetailTvShowActivity
 import com.bumptech.glide.Glide
 
-class FavoriteTvShowAdapter : RecyclerView.Adapter<FavoriteTvShowAdapter.FavoriteTvShowViewHolder>() {
+class FavoriteTvShowAdapter : PagedListAdapter<FilmEntity, FavoriteTvShowAdapter.FavoriteTvShowViewHolder>(DIFF_CALLBACK) {
+
+    companion object{
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>(){
+            override fun areItemsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
+                return oldItem.filmId == newItem.filmId
+            }
+
+            override fun areContentsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
 
     private var listTvShow = ArrayList<FilmEntity>()
 
@@ -26,11 +42,11 @@ class FavoriteTvShowAdapter : RecyclerView.Adapter<FavoriteTvShowAdapter.Favorit
     }
 
     override fun onBindViewHolder(holder: FavoriteTvShowViewHolder, position: Int) {
-        val favTvShow = listTvShow[position]
-        holder.bind(favTvShow)
+        val favTvShow = getItem(position)
+        if(favTvShow!=null) holder.bind(favTvShow)
     }
 
-    override fun getItemCount(): Int = listTvShow.size
+//    override fun getItemCount(): Int = listTvShow.size
 
 
     class FavoriteTvShowViewHolder(private val binding: ListItemsMoviesBinding) :
@@ -46,12 +62,14 @@ class FavoriteTvShowAdapter : RecyclerView.Adapter<FavoriteTvShowAdapter.Favorit
 
 
                 itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailMovieActivity::class.java)
-                    intent.putExtra(DetailMovieActivity.EXTRA_MOVIE, movie.filmId)
+                    val intent = Intent(itemView.context, DetailTvShowActivity::class.java)
+                    intent.putExtra(DetailTvShowActivity.EXTRA_TV, movie.filmId)
                     itemView.context.startActivity(intent)
                 }
             }
         }
 
     }
+
+    fun getSwipedData(swipedPosition : Int): FilmEntity? = getItem(swipedPosition)
 }

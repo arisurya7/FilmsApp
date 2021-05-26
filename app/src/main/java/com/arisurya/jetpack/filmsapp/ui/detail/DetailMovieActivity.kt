@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ShareCompat
@@ -88,22 +89,21 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v) {
+            detailMovieBinding.btnFav->{
+                if(viewModel.detailMovie.value?.data?.favorite == true)showToastRemoveFromFavorite()
+                else showToastAddToFavorite()
+                viewModel.setMovieFavorite()
+            }
             detailMovieBinding.btnShare -> {
                 shareMovie()
             }
             detailMovieBinding.btnVisitMovie -> {
                 visitMovie()
             }
-            detailMovieBinding.btnFav->{
-                if(viewModel.detailMovie.value?.data?.favorite == true)showToastRemoveFromFavorite()
-                else showToastAddToFavorite()
-                viewModel.setMovieFavorite()
-            }
         }
     }
 
     private fun visitMovie() {
-
         viewModel.detailMovie.observe(this, { movie ->
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/movie/${movie.data?.filmId}")))
         })
@@ -131,7 +131,6 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
                 .setText(message)
                 .startChooser()
         })
-
 
     }
 

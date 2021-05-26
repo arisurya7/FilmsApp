@@ -105,7 +105,7 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
                     Status.LOADING -> setProgressBar(true)
                     Status.SUCCESS->{
                         setProgressBar(false)
-                        tvShowAdapter.setTvShow(tvShow.data)
+                        tvShowAdapter.submitList(tvShow.data)
                         tvShowAdapter.notifyDataSetChanged()
                     }
                     Status.ERROR ->{

@@ -2,6 +2,7 @@ package com.arisurya.jetpack.filmsapp.ui.tvshow
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.paging.PagedList
 import com.arisurya.jetpack.filmsapp.data.FilmsRepository
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.vo.Resource
@@ -15,15 +16,15 @@ class TvShowViewModel(private val filmsRepository: FilmsRepository) : ViewModel(
         choose = i
     }
 
-    fun getTvShowDefault(): LiveData<Resource<List<FilmEntity>>> = filmsRepository.getTvShows()
+    fun getTvShowDefault(): LiveData<Resource<PagedList<FilmEntity>>> = filmsRepository.getTvShows()
 
-    fun getTvShowSortByRating(): LiveData<Resource<List<FilmEntity>>> =
+    fun getTvShowSortByRating(): LiveData<Resource<PagedList<FilmEntity>>> =
         filmsRepository.getTvShowsSortedByRating()
 
-    fun getTvShowSortByTitle(): LiveData<Resource<List<FilmEntity>>> =
+    fun getTvShowSortByTitle(): LiveData<Resource<PagedList<FilmEntity>>> =
         filmsRepository.getTvShowsSortedByTitle()
 
-    fun getTvShowOptions(i: Int): LiveData<Resource<List<FilmEntity>>> {
+    fun getTvShowOptions(i: Int): LiveData<Resource<PagedList<FilmEntity>>> {
         return when (i) {
             1 -> getTvShowSortByRating()
             2 -> getTvShowSortByTitle()

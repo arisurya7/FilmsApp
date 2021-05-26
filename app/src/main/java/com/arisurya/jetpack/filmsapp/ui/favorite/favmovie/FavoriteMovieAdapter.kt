@@ -3,13 +3,28 @@ package com.arisurya.jetpack.filmsapp.ui.favorite.favmovie
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.ListItemsMoviesBinding
 import com.arisurya.jetpack.filmsapp.ui.detail.DetailMovieActivity
 import com.bumptech.glide.Glide
 
-class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteMoviesViewHolder>() {
+class FavoriteMovieAdapter : PagedListAdapter<FilmEntity, FavoriteMovieAdapter.FavoriteMoviesViewHolder>(DIFF_CALLBACK) {
+
+    companion object{
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>(){
+            override fun areItemsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
+                return oldItem.filmId == newItem.filmId
+            }
+
+            override fun areContentsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
+                return oldItem == newItem
+            }
+
+        }
+    }
 
     private var listMovies = ArrayList<FilmEntity>()
 
@@ -26,11 +41,13 @@ class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteM
     }
 
     override fun onBindViewHolder(holder: FavoriteMoviesViewHolder, position: Int) {
-        val favMovie = listMovies[position]
-        holder.bind(favMovie)
+        val favMovie = getItem(position)
+        if (favMovie!=null){
+            holder.bind(favMovie)
+        }
     }
 
-    override fun getItemCount(): Int = listMovies.size
+//    override fun getItemCount(): Int = listMovies.size
 
 
     class FavoriteMoviesViewHolder(private val binding: ListItemsMoviesBinding) :
@@ -54,4 +71,7 @@ class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.FavoriteM
         }
 
     }
+
+
+    fun getSwipedData(swipedPosition : Int): FilmEntity? = getItem(swipedPosition)
 }

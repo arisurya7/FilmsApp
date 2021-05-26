@@ -6,18 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.databinding.FragmentFavoriteTvShowBinding
 import com.arisurya.jetpack.filmsapp.ui.favorite.favmovie.FavoriteMovieAdapter
 import com.arisurya.jetpack.filmsapp.ui.favorite.favmovie.FavoriteMovieViewModel
 import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 
 
 class FavoriteTvShowFragment : Fragment() {
 
     private lateinit var fragmentFavoriteTvShowViewBinding : FragmentFavoriteTvShowBinding
     private lateinit var viewModel: FavoriteTvShowViewModel
+    private lateinit var favTvShowAdapter : FavoriteTvShowAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +34,9 @@ class FavoriteTvShowFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        itemTouchHelper.attachToRecyclerView(fragmentFavoriteTvShowViewBinding.rvFavTvShow)
+
         if(activity!=null){
             val factory = ViewModelFactory.getInstance(requireActivity())
             viewModel = ViewModelProvider(
@@ -37,13 +44,12 @@ class FavoriteTvShowFragment : Fragment() {
                 factory
             )[FavoriteTvShowViewModel::class.java]
 
-            val favTvShowAdapter = FavoriteTvShowAdapter()
+            favTvShowAdapter = FavoriteTvShowAdapter()
             setProgressBar(true)
             viewModel.getFavoriteTvShow().observe(this, { favTvShow ->
                 if (favTvShow!= null) {
                     setProgressBar(false)
-                    favTvShowAdapter.setFavoriteTvShow(favTvShow)
-                    favTvShowAdapter.notifyDataSetChanged()
+                    favTvShowAdapter.submitList(favTvShow)
                 }
             })
 
@@ -61,5 +67,35 @@ class FavoriteTvShowFragment : Fragment() {
         if (state) fragmentFavoriteTvShowViewBinding.progressBar.visibility = View.VISIBLE
         else fragmentFavoriteTvShowViewBinding.progressBar.visibility = View.GONE
     }
+
+    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback(){
+        override fun getMovementFlags(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder
+        ): Int =
+            makeMovementFlags(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean = true
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            if(view!=null){
+                val swipedPosition = viewHolder.adapterPosition
+                val filmEntity = favTvShowAdapter.getSwipedData(swipedPosition)
+                filmEntity?.let { viewModel.setFavorite(it) }
+
+                val snackBar = Snackbar.make(view as View,R.string.message_cancel, Snackbar.LENGTH_LONG)
+                snackBar.setAction(R.string.message_confirm){
+                    filmEntity?.let { viewModel.setFavorite(it) }
+                }
+                snackBar.show()
+            }
+        }
+
+    })
 
 }

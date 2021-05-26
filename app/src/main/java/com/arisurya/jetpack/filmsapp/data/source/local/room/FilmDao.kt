@@ -1,28 +1,30 @@
 package com.arisurya.jetpack.filmsapp.data.source.local.room
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
+import androidx.paging.PagedList
 import androidx.room.*
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 
 @Dao
 interface FilmDao {
     @Query("SELECT * FROM filmentities WHERE tvShow = 0")
-    fun getMovies(): LiveData<List<FilmEntity>>
+    fun getMovies(): DataSource.Factory<Int,FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow=0 ORDER BY rating DESC")
-    fun getMoviesSortRating(): LiveData<List<FilmEntity>>
+    fun getMoviesSortRating(): DataSource.Factory<Int,FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow=0 ORDER BY title ASC")
-    fun getMoviesSortTitle(): LiveData<List<FilmEntity>>
+    fun getMoviesSortTitle(): DataSource.Factory<Int,FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow=1")
-    fun getTvShows(): LiveData<List<FilmEntity>>
+    fun getTvShows():DataSource.Factory<Int,FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow=1 ORDER BY rating DESC")
-    fun getTvShowSortRating(): LiveData<List<FilmEntity>>
+    fun getTvShowSortRating(): DataSource.Factory<Int,FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow=1 ORDER BY title ASC")
-    fun getTvShowSortTitle(): LiveData<List<FilmEntity>>
+    fun getTvShowSortTitle(): DataSource.Factory<Int,FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE filmId = :filmId")
     fun getDetailFilm(filmId: String): LiveData<FilmEntity>
@@ -40,9 +42,9 @@ interface FilmDao {
     fun updateFilmByDetail(released: String, duration: String, language: String, filmId: String)
 
     @Query("SELECT * FROM filmentities WHERE tvShow = 0 AND favorite =1")
-    fun getFavoriteMovies(): LiveData<List<FilmEntity>>
+    fun getFavoriteMovies(): DataSource.Factory<Int, FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow = 1 AND favorite =1")
-    fun getFavoriteTvShows(): LiveData<List<FilmEntity>>
+    fun getFavoriteTvShows(): DataSource.Factory<Int, FilmEntity>
 
 }

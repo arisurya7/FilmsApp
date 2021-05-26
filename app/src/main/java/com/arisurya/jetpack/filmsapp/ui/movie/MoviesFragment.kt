@@ -42,30 +42,7 @@ class MoviesFragment : Fragment() {
                 this,
                 factory
             )[MoviesViewModel::class.java]
-
-            val moviesAdapter = MoviesAdapter()
-            viewModel.getMovieOptions(viewModel.choose).observe(this, { movies ->
-                if (movies != null) {
-                    when (movies.status) {
-                        Status.LOADING -> setProgressBar(true)
-                        Status.SUCCESS -> {
-                            setProgressBar(false)
-                            moviesAdapter.setMovies(movies.data)
-                            moviesAdapter.notifyDataSetChanged()
-                        }
-                        Status.ERROR -> {
-                            setProgressBar(false)
-                            Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            })
-
-            with(fragmentMoviesBinding.rvMovies) {
-                this.layoutManager = LinearLayoutManager(context)
-                this.setHasFixedSize(true)
-                this.adapter = moviesAdapter
-            }
+            setViewModelMovie()
         }
     }
 
@@ -107,8 +84,7 @@ class MoviesFragment : Fragment() {
                     Status.LOADING -> setProgressBar(true)
                     Status.SUCCESS -> {
                         setProgressBar(false)
-                        moviesAdapter.setMovies(movies.data)
-                        moviesAdapter.notifyDataSetChanged()
+                        moviesAdapter.submitList(movies.data)
                     }
                     Status.ERROR -> {
                         setProgressBar(false)

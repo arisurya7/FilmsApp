@@ -21,6 +21,11 @@ class DetailMovieViewModel(private val filmsRepository: FilmsRepository) : ViewM
         movieId.value?.let { filmsRepository.getDetailMovie(mMovieId.toInt()) }
     }
 
+    fun getMovie():LiveData<Resource<FilmEntity>> = movieId.value?.toInt()?.let {
+        filmsRepository.getDetailMovie(
+            it
+        )
+    }!!
 
     fun setMovieFavorite(){
         val movieResource = detailMovie.value
