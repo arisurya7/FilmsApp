@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
 import androidx.core.app.ShareCompat
@@ -25,6 +24,8 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var detailMovieBinding: ContentDetailMovieBinding
     private lateinit var activityDetailMovieBinding: ActivityDetailMovieBinding
     private lateinit var viewModel: DetailMovieViewModel
+    private lateinit var linkVisit:String
+    private lateinit var shareMessage:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,13 +106,15 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun visitMovie() {
         viewModel.detailMovie.observe(this, { movie ->
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.themoviedb.org/movie/${movie.data?.filmId}")))
+            linkVisit = movie.data?.link.toString()
         })
+        if(linkVisit.isNotEmpty())
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(linkVisit)))
     }
 
     private fun shareMovie() {
         viewModel.detailMovie.observe(this, { movie ->
-            val message = """
+            shareMessage = """
             [Lets Watching]
             Title           : ${movie.data?.title}
             Rating          : ${movie.data?.rating}
@@ -123,14 +126,14 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
 
             Download FilmApps
         """.trimIndent()
-            val mimeType = "text/plain"
-            ShareCompat.IntentBuilder
-                .from(this)
-                .setType(mimeType)
-                .setChooserTitle("Share via")
-                .setText(message)
-                .startChooser()
         })
+        val mimeType = "text/plain"
+        ShareCompat.IntentBuilder
+            .from(this)
+            .setType(mimeType)
+            .setChooserTitle("Share via")
+            .setText(shareMessage)
+            .startChooser()
 
     }
 

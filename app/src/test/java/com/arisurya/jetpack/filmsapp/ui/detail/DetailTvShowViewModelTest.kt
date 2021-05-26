@@ -46,8 +46,8 @@ class DetailTvShowViewModelTest {
         tvShow.value = dummyDetailTvShow
 
         `when`(filmsRepository.getDetailTvShow(showId.toInt())).thenReturn(tvShow)
-//        val tvShowEntity = viewModel.detailTvShow
-//        assertNotNull(tvShowEntity)
+        val tvShowEntity = viewModel.detailTvShow
+        assertNotNull(tvShowEntity)
 //        assertEquals(dummyTvShow.filmId, tvShowEntity.value)
 //        assertEquals(dummyTvShow.title, tvShowEntity?.title)
 //        assertEquals(dummyTvShow.rating.toString(), tvShowEntity?.rating.toString())

@@ -213,6 +213,32 @@ class HomeActivityTest {
     }
 
     @Test
+    fun loadButtonFavoriteMovie() {
+        onView(withId(R.id.rv_movies)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+        onView(withId(R.id.btn_fav)).check(matches(isDisplayed()))
+        onView(withId(R.id.btn_fav)).perform(click())
+    }
+
+    @Test
+    fun loadButtonFavoriteTvShow() {
+        onView(withText(R.string.tv_Show)).perform(click())
+        onView(withId(R.id.rv_tvshow)).check(matches(isDisplayed()))
+        onView(withId(R.id.rv_tvshow)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                0,
+                click()
+            )
+        )
+        onView(withId(R.id.btn_fav)).check(matches(isDisplayed()))
+        onView(withId(R.id.btn_fav)).perform(click())
+    }
+
+    @Test
     fun loadFavoriteMovie() {
         onView(withId(R.id.fav)).perform(click())
         onView(withId(R.id.rv_fav_movies)).check(matches(isDisplayed()))

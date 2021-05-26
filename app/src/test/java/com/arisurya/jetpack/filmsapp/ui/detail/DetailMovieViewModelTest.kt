@@ -48,19 +48,9 @@ class DetailMovieViewModelTest {
         movie.value = dummyDetailMovie
 
         `when`(filmsRepository.getDetailMovie(movieId.toInt())).thenReturn(movie)
-        val movieEntity = viewModel.getMovie().value?.data
+        val movieEntity = viewModel.detailMovie
         assertNotNull(movieEntity)
-        assertEquals(dummyMovie.filmId, movieEntity?.filmId)
-        assertEquals(dummyMovie.title, movieEntity?.title)
-        assertEquals(dummyMovie.rating.toString(), movieEntity?.rating.toString())
-        assertEquals(dummyMovie.duration, movieEntity?.duration)
-        assertEquals(dummyMovie.released, movieEntity?.released)
-        assertEquals(dummyMovie.language, movieEntity?.language)
-        assertEquals(dummyMovie.description, movieEntity?.description)
-        assertEquals(dummyMovie.imagePath, movieEntity?.imagePath)
-        assertEquals(dummyMovie.link, movieEntity?.link)
-
-        viewModel.getMovie().observeForever(observer)
+        viewModel.detailMovie.observeForever(observer)
         verify(observer).onChanged(dummyDetailMovie)
     }
 }
