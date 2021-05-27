@@ -19,15 +19,10 @@ class DetailTvShowViewModel(private val filmsRepository: FilmsRepository) : View
         showId.value?.let { filmsRepository.getDetailTvShow(mShowId.toInt()) }
     }
 
-    fun setTvShowFavorite(){
-        val tvResource = detailTvShow.value
-        if(tvResource!=null){
-            val filmEntity = tvResource.data
-            if(filmEntity!=null){
-                val newState = !filmEntity.favorite
-                filmsRepository.setFavoriteFilm(filmEntity,newState)
-            }
-        }
+    fun getTvShowDetail():LiveData<Resource<FilmEntity>> = detailTvShow
 
+    fun setTvShowFavorite(filmEntity: FilmEntity){
+        val newState = !filmEntity.favorite
+        filmsRepository.setFavoriteFilm(filmEntity,newState)
     }
 }

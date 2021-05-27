@@ -51,6 +51,8 @@ class FavoriteMovieFragment : Fragment() {
             viewModel.getFavoriteMovies().observe(this, { favMovies ->
                 if (favMovies != null) {
                     setProgressBar(false)
+                    if(favMovies.size == 0) setImageNoData(true)
+                    else setImageNoData(false)
                     favoriteMoviesAdapter.submitList(favMovies)
                 }
             })
@@ -67,6 +69,17 @@ class FavoriteMovieFragment : Fragment() {
     private fun setProgressBar(state: Boolean) {
         if (state) fragmentFavoriteViewBinding.progressBar.visibility = View.VISIBLE
         else fragmentFavoriteViewBinding.progressBar.visibility = View.GONE
+    }
+
+    private fun setImageNoData(state: Boolean){
+        if(state){
+            fragmentFavoriteViewBinding.imgNoData.visibility = View.VISIBLE
+            fragmentFavoriteViewBinding.tvEmpty.visibility = View.VISIBLE
+        }
+        else {
+            fragmentFavoriteViewBinding.imgNoData.visibility = View.GONE
+            fragmentFavoriteViewBinding.tvEmpty.visibility = View.GONE
+        }
     }
 
 

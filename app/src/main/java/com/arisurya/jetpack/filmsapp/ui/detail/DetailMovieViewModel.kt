@@ -16,19 +16,27 @@ class DetailMovieViewModel(private val filmsRepository: FilmsRepository) : ViewM
         this.movieId.value = movieId
     }
 
-    var detailMovie: LiveData<Resource<FilmEntity>> = Transformations.switchMap(movieId) { mMovieId ->
-        movieId.value?.let { filmsRepository.getDetailMovie(mMovieId.toInt()) }
-    }
-
-    fun setMovieFavorite(){
-        val movieResource = detailMovie.value
-        if(movieResource!=null){
-            val filmEntity = movieResource.data
-            if(filmEntity!=null){
-                val newState = !filmEntity.favorite
-                filmsRepository.setFavoriteFilm(filmEntity,newState)
-            }
+    var detailMovie: LiveData<Resource<FilmEntity>> =
+        Transformations.switchMap(movieId) { mMovieId ->
+            movieId.value?.let { filmsRepository.getDetailMovie(mMovieId.toInt()) }
         }
 
+    fun getMovieDetail(): LiveData<Resource<FilmEntity>> = detailMovie
+
+//    fun setMovieFavorite() {
+//        val movieResource = detailMovie.value
+//        if (movieResource != null) {
+//            val filmEntity = movieResource.data
+//            if (filmEntity != null) {
+//                val newState = !filmEntity.favorite
+//                filmsRepository.setFavoriteFilm(filmEntity, newState)
+//            }
+//        }
+//
+//    }
+
+    fun setMovieFavorite(filmEntity: FilmEntity) {
+        val newState = !filmEntity.favorite
+        filmsRepository.setFavoriteFilm(filmEntity, newState)
     }
 }

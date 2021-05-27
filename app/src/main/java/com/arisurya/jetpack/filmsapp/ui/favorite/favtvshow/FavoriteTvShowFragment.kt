@@ -15,6 +15,7 @@ import com.arisurya.jetpack.filmsapp.ui.favorite.favmovie.FavoriteMovieAdapter
 import com.arisurya.jetpack.filmsapp.ui.favorite.favmovie.FavoriteMovieViewModel
 import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_favorite_movie.*
 
 
 class FavoriteTvShowFragment : Fragment() {
@@ -49,6 +50,8 @@ class FavoriteTvShowFragment : Fragment() {
             viewModel.getFavoriteTvShow().observe(this, { favTvShow ->
                 if (favTvShow!= null) {
                     setProgressBar(false)
+                    if(favTvShow.size == 0) setImageNoData(true)
+                    else setImageNoData(false)
                     favTvShowAdapter.submitList(favTvShow)
                 }
             })
@@ -66,6 +69,17 @@ class FavoriteTvShowFragment : Fragment() {
     private fun setProgressBar(state: Boolean) {
         if (state) fragmentFavoriteTvShowViewBinding.progressBar.visibility = View.VISIBLE
         else fragmentFavoriteTvShowViewBinding.progressBar.visibility = View.GONE
+    }
+
+    private fun setImageNoData(state: Boolean){
+        if(state){
+            fragmentFavoriteTvShowViewBinding.imgNoData.visibility = View.VISIBLE
+            fragmentFavoriteTvShowViewBinding.tvEmpty.visibility = View.VISIBLE
+        }
+        else {
+            fragmentFavoriteTvShowViewBinding.imgNoData.visibility = View.GONE
+            fragmentFavoriteTvShowViewBinding.tvEmpty.visibility = View.GONE
+        }
     }
 
     private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback(){

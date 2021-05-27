@@ -6,7 +6,9 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.arisurya.jetpack.filmsapp.data.FilmsRepository
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
+import com.arisurya.jetpack.filmsapp.utils.DataDummy
 import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
@@ -54,5 +56,12 @@ class FavoriteMovieViewModelTest {
 
         viewModel.getFavoriteMovies().observeForever(observer)
         verify(observer).onChanged(dummyFavMovies)
+    }
+
+    @Test
+    fun setFavorite(){
+        viewModel.setFavorite(DataDummy.generateDummyMovies()[0])
+        verify(filmsRepository).setFavoriteFilm(DataDummy.generateDummyMovies()[0], true)
+        verifyNoMoreInteractions(filmsRepository)
     }
 }

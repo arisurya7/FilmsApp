@@ -26,6 +26,7 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var viewModel: DetailMovieViewModel
     private lateinit var linkVisit:String
     private lateinit var shareMessage:String
+    private lateinit var filmEntity: FilmEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +46,7 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
             setProgressBar(true)
             if (movieId != null) {
                 viewModel.setSelectedMovie(movieId)
-                viewModel.detailMovie.observe(this, { movieWithDetail ->
+                viewModel.getMovieDetail()?.observe(this, { movieWithDetail ->
                     if (movieWithDetail != null) {
                         when (movieWithDetail.status) {
                             Status.LOADING -> setProgressBar(true)
@@ -68,6 +69,7 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun populateMovie(movie: FilmEntity?) {
+        detailMovieBind }
         detailMovieBinding.tvMovieTitle.text = movie?.title
         detailMovieBinding.tvMovieRating.text = movie?.rating.toString()
         detailMovieBinding.tvMovieReleased.text = movie?.released
@@ -91,9 +93,7 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v) {
             detailMovieBinding.btnFav->{
-                if(viewModel.detailMovie.value?.data?.favorite == true)showToastRemoveFromFavorite()
-                else showToastAddToFavorite()
-                viewModel.setMovieFavorite()
+                setFavoriteMovie()
             }
             detailMovieBinding.btnShare -> {
                 shareMovie()
@@ -174,6 +174,18 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
             view = toastView
             show()
         }
+    }
+
+    private fun setFavoriteMovie(){
+        if(viewModel.detailMovie.value?.data?.favorite == true)showToastRemoveFromFavorite()
+        else showToastAddToFavorite()
+        viewModel.getMovieDetail().observe(this,{movieWithDetail->
+            if(movieWithDetail!=null){
+                if(movieWithDetail.data!=null)
+                    filmEntity= movieWithDetail.data
+            }
+        })
+        viewModel.setMovieFavorite(filmEntity)
     }
 
 }

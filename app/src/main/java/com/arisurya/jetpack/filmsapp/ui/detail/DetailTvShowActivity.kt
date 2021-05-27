@@ -21,6 +21,9 @@ class DetailTvShowActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var detailTvShowBinding: ContentDetailTvShowBinding
     private lateinit var activityDetailTvShowBinding: ActivityDetailTvShowBinding
     private lateinit var viewModel: DetailTvShowViewModel
+    private lateinit var linkVisit:String
+    private lateinit var shareMessage:String
+    private lateinit var filmEntity: FilmEntity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +42,7 @@ class DetailTvShowActivity : AppCompatActivity(), View.OnClickListener {
             val showId = extras.getString(EXTRA_TV)
             if (showId != null) {
                 viewModel.setSelectedShow(showId)
-                viewModel.detailTvShow.observe(this, { show ->
+                viewModel.getTvShowDetail().observe(this, { show ->
                     if(show!=null){
                         when(show.status){
                             Status.LOADING -> setProgressBar(true)
@@ -91,9 +94,7 @@ class DetailTvShowActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v){
             detailTvShowBinding.btnFav->{
-                if(viewModel.detailTvShow.value?.data?.favorite == true)showToastRemoveFromFavorite()
-                else showToastAddToFavorite()
-                viewModel.setTvShowFavorite()
+                setFavoriteTvShow()
             }
         }
     }
@@ -123,5 +124,17 @@ class DetailTvShowActivity : AppCompatActivity(), View.OnClickListener {
             view = toastView
             show()
         }
+    }
+
+    private fun setFavoriteTvShow(){
+        if(viewModel.detailTvShow.value?.data?.favorite == true)showToastRemoveFromFavorite()
+        else showToastAddToFavorite()
+        viewModel.getTvShowDetail().observe(this,{movieWithDetail->
+            if(movieWithDetail!=null){
+                if(movieWithDetail.data!=null)
+                    filmEntity= movieWithDetail.data
+            }
+        })
+        viewModel.setTvShowFavorite(filmEntity)
     }
 }

@@ -8,6 +8,7 @@ import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.utils.DataDummy
 import com.arisurya.jetpack.filmsapp.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
@@ -46,19 +47,16 @@ class DetailTvShowViewModelTest {
         tvShow.value = dummyDetailTvShow
 
         `when`(filmsRepository.getDetailTvShow(showId.toInt())).thenReturn(tvShow)
-        val tvShowEntity = viewModel.detailTvShow
+        val tvShowEntity = viewModel.getTvShowDetail()
         assertNotNull(tvShowEntity)
-//        assertEquals(dummyTvShow.filmId, tvShowEntity.value)
-//        assertEquals(dummyTvShow.title, tvShowEntity?.title)
-//        assertEquals(dummyTvShow.rating.toString(), tvShowEntity?.rating.toString())
-//        assertEquals(dummyTvShow.duration, tvShowEntity?.duration)
-//        assertEquals(dummyTvShow.released, tvShowEntity?.released)
-//        assertEquals(dummyTvShow.language, tvShowEntity?.language)
-//        assertEquals(dummyTvShow.description, tvShowEntity?.description)
-//        assertEquals(dummyTvShow.imagePath, tvShowEntity?.imagePath)
-//        assertEquals(dummyTvShow.link, tvShowEntity?.link)
-
-        viewModel.detailTvShow.observeForever(observer)
+        viewModel.getTvShowDetail().observeForever(observer)
         verify(observer).onChanged(dummyDetailTvShow)
+    }
+
+    @Test
+    fun setTvShowFavorite(){
+        viewModel.setTvShowFavorite(DataDummy.generateDummyTvShow()[0])
+        verify(filmsRepository).setFavoriteFilm(DataDummy.generateDummyTvShow()[0], true)
+        verifyNoMoreInteractions(filmsRepository)
     }
 }
