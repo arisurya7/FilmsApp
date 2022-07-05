@@ -41,21 +41,11 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
             this,
             factory
         )[DetailMovieViewModel::class.java]
-<<<<<<< HEAD
         intent.extras?.let {
             it.getString(EXTRA_MOVIE)?.apply {
                 setProgressBar(true)
                 viewModel.setSelectedMovie(this)
                 viewModel.detailMovie.observe(this@DetailMovieActivity,{ movieWithDetail ->
-=======
-        val extras = intent.extras
-        if (extras != null) {
-            val movieId = extras.getString(EXTRA_MOVIE)
-            setProgressBar(true)
-            if (movieId != null) {
-                viewModel.setSelectedMovie(movieId)
-                viewModel.getMovieDetail()?.observe(this, { movieWithDetail ->
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
                     if (movieWithDetail != null) {
                         when (movieWithDetail.status) {
                             Status.LOADING -> setProgressBar(true)
@@ -67,26 +57,17 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
                             }
                             Status.ERROR -> {
                                 setProgressBar(false)
-<<<<<<< HEAD
                                 Toast.makeText(this@DetailMovieActivity, "Something Wrong", Toast.LENGTH_SHORT).show()
-=======
-                                Toast.makeText(this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
                             }
                         }
                     }
 
-<<<<<<< HEAD
                 } )
-=======
-                })
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
             }
         }
     }
 
     private fun populateMovie(movie: FilmEntity?) {
-<<<<<<< HEAD
         detailMovieBinding.apply {
             tvMovieTitle.text = movie?.title
             tvMovieRating.text = movie?.rating.toString()
@@ -108,26 +89,6 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
 
         }
 
-=======
-        detailMovieBind }
-        detailMovieBinding.tvMovieTitle.text = movie?.title
-        detailMovieBinding.tvMovieRating.text = movie?.rating.toString()
-        detailMovieBinding.tvMovieReleased.text = movie?.released
-        detailMovieBinding.tvMovieDuration.text = movie?.duration
-        detailMovieBinding.tvMovieDesc.text = movie?.description
-        detailMovieBinding.tvMovieLanguage.text = movie?.language
-        detailMovieBinding.btnVisitMovie.setOnClickListener(this)
-        detailMovieBinding.btnShare.setOnClickListener(this)
-        detailMovieBinding.btnFav.setOnClickListener(this)
-
-        Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185${movie?.imagePath}")
-            .into(detailMovieBinding.imgBgDetail)
-
-        Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185${movie?.imagePath}")
-            .into(detailMovieBinding.imgMoviePoster)
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
     }
 
@@ -220,18 +181,11 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     private fun setFavoriteMovie(){
         if(viewModel.detailMovie.value?.data?.favorite == true)showToastRemoveFromFavorite()
         else showToastAddToFavorite()
-<<<<<<< HEAD
         viewModel.detailMovie.observe(this,{movieWithDetail ->
             if(movieWithDetail!=null){
                 if(movieWithDetail.data!=null){
                     filmEntity = movieWithDetail.data
                 }
-=======
-        viewModel.getMovieDetail().observe(this,{movieWithDetail->
-            if(movieWithDetail!=null){
-                if(movieWithDetail.data!=null)
-                    filmEntity= movieWithDetail.data
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
             }
         })
         viewModel.setMovieFavorite(filmEntity)

@@ -59,11 +59,7 @@ class FavoriteTvShowViewModelTest {
     }
 
     @Test
-<<<<<<< HEAD
     fun setFavorite() {
-=======
-    fun setFavorite(){
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
         viewModel.setFavorite(DataDummy.generateDummyTvShow()[0])
         verify(filmsRepository).setFavoriteFilm(DataDummy.generateDummyTvShow()[0], true)
         verifyNoMoreInteractions(filmsRepository)

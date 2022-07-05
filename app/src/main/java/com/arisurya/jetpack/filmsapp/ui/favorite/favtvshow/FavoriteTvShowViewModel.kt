@@ -7,15 +7,9 @@ import com.arisurya.jetpack.filmsapp.data.FilmsRepository
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 
 class FavoriteTvShowViewModel(private val filmsRepository: FilmsRepository) : ViewModel() {
-<<<<<<< HEAD
     fun getFavoriteTvShow(): LiveData<PagedList<FilmEntity>> = filmsRepository.getFavoriteTvShows()
 
     fun setFavorite(filmEntity: FilmEntity) {
-=======
-    fun getFavoriteTvShow():LiveData<PagedList<FilmEntity>> = filmsRepository.getFavoriteTvShows()
-
-    fun setFavorite(filmEntity: FilmEntity){
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
         val newState = !filmEntity.favorite
         filmsRepository.setFavoriteFilm(filmEntity, newState)
     }

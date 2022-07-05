@@ -66,13 +66,8 @@ class MoviesFragment : Fragment() {
                 viewModel.setOption(2)
                 setViewModelMovie()
             }
-<<<<<<< HEAD
             R.id.fav -> {
                 startActivity(Intent(activity, FavoriteActivity::class.java))
-=======
-            R.id.fav->{
-                startActivity(Intent (activity, FavoriteActivity::class.java))
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
             }
         }
 
@@ -93,11 +88,7 @@ class MoviesFragment : Fragment() {
                     }
                     Status.ERROR -> {
                         setProgressBar(false)
-<<<<<<< HEAD
                         Toast.makeText(context, "Something Wrong", Toast.LENGTH_SHORT).show()
-=======
-                        Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
                     }
                 }
             }

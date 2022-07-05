@@ -1,13 +1,7 @@
 package com.arisurya.jetpack.filmsapp.data
 
-<<<<<<< HEAD
 
 import androidx.lifecycle.LiveData
-=======
-import android.graphics.pdf.PdfDocument
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.arisurya.jetpack.filmsapp.data.source.local.LocalDataSource
@@ -24,10 +18,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-<<<<<<< HEAD
 @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
-=======
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 class FilmsRepository private constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
@@ -168,11 +159,7 @@ class FilmsRepository private constructor(
     override fun getTvShows(): LiveData<Resource<PagedList<FilmEntity>>> {
         return object :
             NetworkBoundResource<PagedList<FilmEntity>, List<ResultsItemTvShow>>(appExecutors) {
-<<<<<<< HEAD
             override fun loadFromDB(): LiveData<PagedList<FilmEntity>> {
-=======
-            override fun loadFromDB(): LiveData<PagedList<FilmEntity>>{
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
                     .setInitialLoadSizeHint(4)
@@ -180,10 +167,7 @@ class FilmsRepository private constructor(
                     .build()
                 return LivePagedListBuilder(localDataSource.getTvShows(), config).build()
             }
-<<<<<<< HEAD
 
-=======
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
             override fun shouldFetch(data: PagedList<FilmEntity>?): Boolean =
                 data == null || data.isEmpty()
 
@@ -213,11 +197,7 @@ class FilmsRepository private constructor(
     override fun getTvShowsSortedByRating(): LiveData<Resource<PagedList<FilmEntity>>> {
         return object :
             NetworkBoundResource<PagedList<FilmEntity>, List<ResultsItemTvShow>>(appExecutors) {
-<<<<<<< HEAD
             override fun loadFromDB(): LiveData<PagedList<FilmEntity>> {
-=======
-            override fun loadFromDB(): LiveData<PagedList<FilmEntity>>{
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
                     .setInitialLoadSizeHint(4)
@@ -242,11 +222,7 @@ class FilmsRepository private constructor(
     override fun getTvShowsSortedByTitle(): LiveData<Resource<PagedList<FilmEntity>>> {
         return object :
             NetworkBoundResource<PagedList<FilmEntity>, List<ResultsItemTvShow>>(appExecutors) {
-<<<<<<< HEAD
             override fun loadFromDB(): LiveData<PagedList<FilmEntity>> {
-=======
-            override fun loadFromDB(): LiveData<PagedList<FilmEntity>>{
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
                 val config = PagedList.Config.Builder()
                     .setEnablePlaceholders(false)
                     .setInitialLoadSizeHint(4)
@@ -310,11 +286,7 @@ class FilmsRepository private constructor(
     }
 
     override fun setFavoriteFilm(film: FilmEntity, state: Boolean) =
-<<<<<<< HEAD
         appExecutors.diskIO().execute { localDataSource.setFavoriteFilm(film, state) }
-=======
-        appExecutors.diskIO().execute{localDataSource.setFavoriteFilm(film, state)}
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
     fun convertIntToDurationFormat(minute: Int): String {
         return if (minute == 0) {

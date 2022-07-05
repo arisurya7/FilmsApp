@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.ListItemsMoviesBinding
-<<<<<<< HEAD
 import com.arisurya.jetpack.filmsapp.ui.detail.DetailTvShowActivity
 import com.bumptech.glide.Glide
 
@@ -17,16 +16,6 @@ class FavoriteTvShowAdapter :
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>() {
-=======
-import com.arisurya.jetpack.filmsapp.ui.detail.DetailMovieActivity
-import com.arisurya.jetpack.filmsapp.ui.detail.DetailTvShowActivity
-import com.bumptech.glide.Glide
-
-class FavoriteTvShowAdapter : PagedListAdapter<FilmEntity, FavoriteTvShowAdapter.FavoriteTvShowViewHolder>(DIFF_CALLBACK) {
-
-    companion object{
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>(){
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
             override fun areItemsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
                 return oldItem.filmId == newItem.filmId
             }
@@ -38,16 +27,6 @@ class FavoriteTvShowAdapter : PagedListAdapter<FilmEntity, FavoriteTvShowAdapter
         }
     }
 
-<<<<<<< HEAD
-=======
-    private var listTvShow = ArrayList<FilmEntity>()
-
-    fun setFavoriteTvShow(movies: List<FilmEntity>?) {
-        if (movies == null) return
-        this.listTvShow.clear()
-        this.listTvShow.addAll(movies)
-    }
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteTvShowViewHolder {
         val listItemsMoviesBinding =
@@ -57,17 +36,9 @@ class FavoriteTvShowAdapter : PagedListAdapter<FilmEntity, FavoriteTvShowAdapter
 
     override fun onBindViewHolder(holder: FavoriteTvShowViewHolder, position: Int) {
         val favTvShow = getItem(position)
-<<<<<<< HEAD
         if (favTvShow != null) holder.bind(favTvShow)
     }
 
-=======
-        if(favTvShow!=null) holder.bind(favTvShow)
-    }
-
-//    override fun getItemCount(): Int = listTvShow.size
-
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
     class FavoriteTvShowViewHolder(private val binding: ListItemsMoviesBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -91,9 +62,5 @@ class FavoriteTvShowAdapter : PagedListAdapter<FilmEntity, FavoriteTvShowAdapter
 
     }
 
-<<<<<<< HEAD
     fun getSwipedData(swipedPosition: Int): FilmEntity? = getItem(swipedPosition)
-=======
-    fun getSwipedData(swipedPosition : Int): FilmEntity? = getItem(swipedPosition)
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 }

@@ -12,22 +12,6 @@ import com.arisurya.jetpack.filmsapp.ui.detail.DetailMovieActivity
 import com.bumptech.glide.Glide
 
 class MoviesAdapter : PagedListAdapter<FilmEntity, MoviesAdapter.MoviesViewHolder>(DIFF_CALLBACK) {
-<<<<<<< HEAD
-=======
-
-    companion object{
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>(){
-            override fun areItemsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
-                return oldItem.filmId == newItem.filmId
-            }
-
-            override fun areContentsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
-                return oldItem == newItem
-            }
-
-        }
-    }
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>() {
@@ -51,17 +35,9 @@ class MoviesAdapter : PagedListAdapter<FilmEntity, MoviesAdapter.MoviesViewHolde
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val movie = getItem(position)
-<<<<<<< HEAD
         if (movie != null) holder.bind(movie)
     }
 
-=======
-        if(movie!=null) holder.bind(movie)
-    }
-
-//    override fun getItemCount(): Int = listMovies.size
-
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
     class MoviesViewHolder(private val binding: ListItemsMoviesBinding) :
         RecyclerView.ViewHolder(binding.root) {

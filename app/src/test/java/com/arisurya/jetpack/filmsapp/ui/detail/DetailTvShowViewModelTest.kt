@@ -47,24 +47,14 @@ class DetailTvShowViewModelTest {
         tvShow.value = dummyDetailTvShow
 
         `when`(filmsRepository.getDetailTvShow(showId.toInt())).thenReturn(tvShow)
-<<<<<<< HEAD
         val tvShowEntity = viewModel.detailTvShow
         assertNotNull(tvShowEntity)
         viewModel.detailTvShow.observeForever(observer)
-=======
-        val tvShowEntity = viewModel.getTvShowDetail()
-        assertNotNull(tvShowEntity)
-        viewModel.getTvShowDetail().observeForever(observer)
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
         verify(observer).onChanged(dummyDetailTvShow)
     }
 
     @Test
-<<<<<<< HEAD
     fun setMovieFavorite() {
-=======
-    fun setTvShowFavorite(){
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
         viewModel.setTvShowFavorite(DataDummy.generateDummyTvShow()[0])
         verify(filmsRepository).setFavoriteFilm(DataDummy.generateDummyTvShow()[0], true)
         verifyNoMoreInteractions(filmsRepository)

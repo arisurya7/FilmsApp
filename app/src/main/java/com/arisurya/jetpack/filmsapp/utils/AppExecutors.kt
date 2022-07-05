@@ -6,10 +6,7 @@ import androidx.annotation.VisibleForTesting
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-<<<<<<< HEAD
 @Suppress("unused")
-=======
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 class AppExecutors @VisibleForTesting constructor(
     private val diskIO: Executor,
     private val networkIO: Executor,

@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-<<<<<<< HEAD
     xmlns:app="http://schemas.android.com/apk/res-auto"
-=======
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/BgParent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
-=======
-    xmlns:app="http://schemas.android.com/apk/res-auto"
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
     tools:context=".ui.favorite.favmovie.FavoriteMovieFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -28,7 +21,6 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-<<<<<<< HEAD
 
     <ImageView
         android:id="@+id/img_no_data"
@@ -39,24 +31,10 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
-=======
-    <ImageView
-        android:id="@+id/img_no_data"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:src="@drawable/no_data"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
     <TextView
         android:id="@+id/tv_empty"
         android:layout_width="wrap_content"
@@ -66,14 +44,8 @@
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
         android:textStyle="bold"
-<<<<<<< HEAD
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-=======
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
->>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_no_data" />
 
