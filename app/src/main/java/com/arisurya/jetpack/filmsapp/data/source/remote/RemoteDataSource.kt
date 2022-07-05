@@ -104,7 +104,11 @@ class RemoteDataSource {
         return resultListTvShow
     }
 
+<<<<<<< HEAD
     fun getDetailTvShow(tvShowId: Int): LiveData<ApiResponse<DetailTvShowResponse>> {
+=======
+    fun getDetailTvShow(tvShowId: Int) : LiveData<ApiResponse<DetailTvShowResponse>> {
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
         EspressoIdlingResource.increment()
         val resultDetailTvShow = MutableLiveData<ApiResponse<DetailTvShowResponse>>()
         val client = ApiConfig.getApiService().getDetailTvShow(tvShowId, API_KEY, LANGUAGE)
@@ -129,6 +133,12 @@ class RemoteDataSource {
             }
 
         })
+<<<<<<< HEAD
+=======
+
+        return resultDetailTvShow
+    }
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
         return resultDetailTvShow
     }

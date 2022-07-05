@@ -87,7 +87,10 @@ dependencies {
     kapt "androidx.room:room-compiler:$roomVersion"
 
     //paging
+<<<<<<< HEAD
     //noinspection KtxExtensionAvailable,GradleDependency
+=======
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
     implementation "androidx.paging:paging-runtime:$pagingVersion"
 
 }

@@ -11,11 +11,18 @@ import com.arisurya.jetpack.filmsapp.databinding.ListItemsMoviesBinding
 import com.arisurya.jetpack.filmsapp.ui.detail.DetailMovieActivity
 import com.bumptech.glide.Glide
 
+<<<<<<< HEAD
 class FavoriteMovieAdapter :
     PagedListAdapter<FilmEntity, FavoriteMovieAdapter.FavoriteMoviesViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>() {
+=======
+class FavoriteMovieAdapter : PagedListAdapter<FilmEntity, FavoriteMovieAdapter.FavoriteMoviesViewHolder>(DIFF_CALLBACK) {
+
+    companion object{
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>(){
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
             override fun areItemsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
                 return oldItem.filmId == newItem.filmId
             }
@@ -27,6 +34,16 @@ class FavoriteMovieAdapter :
         }
     }
 
+<<<<<<< HEAD
+=======
+    private var listMovies = ArrayList<FilmEntity>()
+
+    fun setFavoriteMovies(movies: List<FilmEntity>?) {
+        if (movies == null) return
+        this.listMovies.clear()
+        this.listMovies.addAll(movies)
+    }
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteMoviesViewHolder {
         val listItemsMoviesBinding =
@@ -36,11 +53,20 @@ class FavoriteMovieAdapter :
 
     override fun onBindViewHolder(holder: FavoriteMoviesViewHolder, position: Int) {
         val favMovie = getItem(position)
+<<<<<<< HEAD
         if (favMovie != null) {
+=======
+        if (favMovie!=null){
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
             holder.bind(favMovie)
         }
     }
 
+<<<<<<< HEAD
+=======
+//    override fun getItemCount(): Int = listMovies.size
+
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
     class FavoriteMoviesViewHolder(private val binding: ListItemsMoviesBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -65,5 +91,9 @@ class FavoriteMovieAdapter :
     }
 
 
+<<<<<<< HEAD
     fun getSwipedData(swipedPosition: Int): FilmEntity? = getItem(swipedPosition)
+=======
+    fun getSwipedData(swipedPosition : Int): FilmEntity? = getItem(swipedPosition)
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 }

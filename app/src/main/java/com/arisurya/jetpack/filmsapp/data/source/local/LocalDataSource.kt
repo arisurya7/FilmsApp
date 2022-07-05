@@ -25,6 +25,7 @@ class LocalDataSource private constructor(private val mFilmDao: FilmDao) {
         mFilmDao.updateFilmByDetail(released, duration, language, filmId)
     }
 
+<<<<<<< HEAD
     fun getMoviesSortByRating(): DataSource.Factory<Int, FilmEntity> =
         mFilmDao.getMoviesSortRating()
 
@@ -32,6 +33,13 @@ class LocalDataSource private constructor(private val mFilmDao: FilmDao) {
 
     fun getTvShowSortByRating(): DataSource.Factory<Int, FilmEntity> =
         mFilmDao.getTvShowSortRating()
+=======
+    fun getMoviesSortByRating(): DataSource.Factory<Int, FilmEntity> = mFilmDao.getMoviesSortRating()
+
+    fun getMoviesSortByTitle(): DataSource.Factory<Int, FilmEntity> = mFilmDao.getMoviesSortTitle()
+
+    fun getTvShowSortByRating(): DataSource.Factory<Int, FilmEntity> = mFilmDao.getTvShowSortRating()
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
     fun getTvShowSortByTitle(): DataSource.Factory<Int, FilmEntity> = mFilmDao.getTvShowSortTitle()
 
@@ -39,7 +47,11 @@ class LocalDataSource private constructor(private val mFilmDao: FilmDao) {
 
     fun getTvShowFavorite(): DataSource.Factory<Int, FilmEntity> = mFilmDao.getFavoriteTvShows()
 
+<<<<<<< HEAD
     fun setFavoriteFilm(film: FilmEntity, newState: Boolean) {
+=======
+    fun setFavoriteFilm(film: FilmEntity, newState:Boolean){
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
         film.favorite = newState
         mFilmDao.updateFilmByFavorite(film)
     }

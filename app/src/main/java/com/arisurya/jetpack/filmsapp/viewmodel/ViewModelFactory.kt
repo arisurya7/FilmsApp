@@ -20,7 +20,11 @@ class ViewModelFactory private constructor(private val mFilmsRepository: FilmsRe
         @Volatile
         private var instance: ViewModelFactory? = null
 
+<<<<<<< HEAD
         fun getInstance(context: Context): ViewModelFactory =
+=======
+        fun getInstance(context :Context): ViewModelFactory =
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
             instance ?: synchronized(this) {
                 instance ?: ViewModelFactory(Injection.provideRepository(context)).apply {
                     instance = this

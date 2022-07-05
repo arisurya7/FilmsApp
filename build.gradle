@@ -56,7 +56,11 @@ ext {
     logginInterceptor = '4.9.0'
 
     roomVersion = '2.2.3'
+<<<<<<< HEAD
     roomRuntimeVersion = '2.3.0'
+=======
+    roomRuntimeVersion = '2.2.5'
+>>>>>>> 5e9cab813dfbf4b381cafde50c218eba216acf8c
 
     pagingVersion = '2.1.1'
 }
