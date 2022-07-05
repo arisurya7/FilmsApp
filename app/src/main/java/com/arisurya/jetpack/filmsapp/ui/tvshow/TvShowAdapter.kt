@@ -3,6 +3,8 @@ package com.arisurya.jetpack.filmsapp.ui.tvshow
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.ListItemsTvshowBinding
@@ -11,14 +13,19 @@ import com.bumptech.glide.Glide
 
 
 class TvShowAdapter(private val callback: TvShowFragmentCallback) :
-    RecyclerView.Adapter<TvShowAdapter.TvShowViewHolder>() {
+    PagedListAdapter<FilmEntity, TvShowAdapter.TvShowViewHolder>(DIFF_CALLBACK) {
 
+    companion object{
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>(){
+            override fun areItemsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
+                return oldItem.filmId == newItem.filmId
+            }
 
-    private var listShow = ArrayList<FilmEntity>()
-    fun setTvShow(tvShow: List<FilmEntity>?) {
-        if (tvShow == null) return
-        this.listShow.clear()
-        this.listShow.addAll(tvShow)
+            override fun areContentsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TvShowViewHolder {
@@ -28,12 +35,9 @@ class TvShowAdapter(private val callback: TvShowFragmentCallback) :
     }
 
     override fun onBindViewHolder(holder: TvShowViewHolder, position: Int) {
-        val tvShow = listShow[position]
-        holder.bind(tvShow)
+        val tvShow = getItem(position)
+        if(tvShow!=null) holder.bind(tvShow)
     }
-
-    override fun getItemCount(): Int = listShow.size
-
 
     inner class TvShowViewHolder(private val binding: ListItemsTvshowBinding) :
         RecyclerView.ViewHolder(binding.root) {

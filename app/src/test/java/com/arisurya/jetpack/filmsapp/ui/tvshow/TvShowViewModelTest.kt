@@ -3,9 +3,12 @@ package com.arisurya.jetpack.filmsapp.ui.tvshow
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import com.arisurya.jetpack.filmsapp.data.FilmsRepository
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.utils.DataDummy
+import com.arisurya.jetpack.filmsapp.utils.PagedListUtils
+import com.arisurya.jetpack.filmsapp.vo.Resource
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Test
 import org.junit.Assert.*
@@ -27,7 +30,10 @@ class TvShowViewModelTest {
     private lateinit var filmsRepository: FilmsRepository
 
     @Mock
-    private lateinit var observer: Observer<List<FilmEntity>>
+    private lateinit var observer: Observer<Resource<PagedList<FilmEntity>>>
+
+    @Mock
+    private lateinit var pagedList: PagedList<FilmEntity>
 
     @Before
     fun setUp() {
@@ -36,15 +42,16 @@ class TvShowViewModelTest {
 
     @Test
     fun getTvShowDefault() {
-        val dummyTvShow = DataDummy.generateDummyTvShow()
-        val tvShow = MutableLiveData<List<FilmEntity>>()
-        tvShow.postValue(dummyTvShow)
+        val dummyTvShow = Resource.success(pagedList)
+        `when`(dummyTvShow.data?.size).thenReturn(4)
+        val tvShow = MutableLiveData<Resource<PagedList<FilmEntity>>>()
+        tvShow.value = dummyTvShow
 
         `when`(filmsRepository.getTvShows()).thenReturn(tvShow)
-        val tvShowEntities = viewModel.getTvShowDefault().value
+        val tvShowEntities = viewModel.getTvShowDefault().value?.data
         verify(filmsRepository).getTvShows()
         assertNotNull(tvShowEntities)
-        assertEquals(10, tvShowEntities?.size)
+        assertEquals(4, tvShowEntities?.size)
 
         viewModel.getTvShowDefault().observeForever(observer)
         verify(observer).onChanged(dummyTvShow)
@@ -52,22 +59,26 @@ class TvShowViewModelTest {
 
     @Test
     fun getTvShowSortByRating() {
-        val dummyTvShowSortByRating =
-            DataDummy.generateDummyTvShow().sortedWith(compareByDescending { it.rating })
-        val tvShow = MutableLiveData<List<FilmEntity>>()
-        tvShow.postValue(dummyTvShowSortByRating)
+        val dummyTvShowSortByRating = Resource.success(
+            PagedListUtils.mockPagedList(
+                DataDummy.generateDummyTvShow().sortedWith(compareByDescending { it.rating })
+            )
+        )
+        `when`(dummyTvShowSortByRating.data?.size).thenReturn(4)
+        val tvShow = MutableLiveData<Resource<PagedList<FilmEntity>>>()
+        tvShow.value = dummyTvShowSortByRating
 
         `when`(filmsRepository.getTvShowsSortedByRating()).thenReturn(tvShow)
-        val tvShowEntities = viewModel.getTvShowSortByRating().value
+        val tvShowEntities = viewModel.getTvShowSortByRating().value?.data
         verify(filmsRepository).getTvShowsSortedByRating()
         assertNotNull(tvShowEntities)
-        assertEquals(10, tvShowEntities?.size)
+        assertEquals(4, tvShowEntities?.size)
 
         if (tvShowEntities != null) {
             for (i in tvShowEntities.indices) {
                 assertEquals(
-                    dummyTvShowSortByRating[i].rating.toString(),
-                    tvShowEntities[i].rating.toString()
+                    dummyTvShowSortByRating.data?.get(i)?.rating.toString(),
+                    tvShowEntities[i]?.rating.toString()
                 )
             }
         }
@@ -78,23 +89,26 @@ class TvShowViewModelTest {
 
     @Test
     fun getTvShowSortByTitle() {
-
-        val dummyTvShowSortByTitle =
-            DataDummy.generateDummyTvShow().sortedWith(compareBy { it.rating })
-        val tvShow = MutableLiveData<List<FilmEntity>>()
-        tvShow.postValue(dummyTvShowSortByTitle)
+        val dummyTvShowSortByTitle = Resource.success(
+            PagedListUtils.mockPagedList(
+                DataDummy.generateDummyTvShow().sortedWith(compareByDescending { it.title })
+            )
+        )
+        `when`(dummyTvShowSortByTitle.data?.size).thenReturn(4)
+        val tvShow = MutableLiveData<Resource<PagedList<FilmEntity>>>()
+        tvShow.value = dummyTvShowSortByTitle
 
         `when`(filmsRepository.getTvShowsSortedByTitle()).thenReturn(tvShow)
-        val tvShowEntities = viewModel.getTvShowSortByTitle().value
+        val tvShowEntities = viewModel.getTvShowSortByTitle().value?.data
         verify(filmsRepository).getTvShowsSortedByTitle()
         assertNotNull(tvShowEntities)
-        assertEquals(10, tvShowEntities?.size)
+        assertEquals(4, tvShowEntities?.size)
 
         if (tvShowEntities != null) {
             for (i in tvShowEntities.indices) {
                 assertEquals(
-                    dummyTvShowSortByTitle[i].rating.toString(),
-                    tvShowEntities[i].rating.toString()
+                    dummyTvShowSortByTitle.data?.get(i)?.title.toString(),
+                    tvShowEntities[i]?.title.toString()
                 )
             }
         }

@@ -17,4 +17,11 @@
     <string name="sort_by_default">Sort by Default</string>
     <string name="sort_by_rating">Sort by Rating</string>
     <string name="sort_by_title">Sort by Title</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="success_add_to_favorite">Success Add to Favorite</string>
+    <string name="remove_from_favorite">Remove From Favorite</string>
+    <string name="message_cancel">Cancel to remove from favorite</string>
+    <string name="message_confirm">Yes</string>
+    <string name="favorite">Favorite</string>
+    <string name="not_found_data_favorite">Not Found Data Favorite</string>
 </resources>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
@@ -11,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.FragmentTvShowBinding
+import com.arisurya.jetpack.filmsapp.ui.favorite.FavoriteActivity
 import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
+import com.arisurya.jetpack.filmsapp.vo.Status
 
 
 class TvShowFragment : Fragment(), TvShowFragmentCallback {
@@ -37,7 +40,7 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val factory = ViewModelFactory.getInstance()
+            val factory = ViewModelFactory.getInstance(requireActivity())
             viewModel = ViewModelProvider(
                 this,
                 factory
@@ -85,6 +88,9 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
                 viewModel.setOptionShow(2)
                 setViewModelTvShow()
             }
+            R.id.fav->{
+                startActivity(Intent (activity, FavoriteActivity::class.java))
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -93,16 +99,27 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
 
         val tvShowAdapter = TvShowAdapter(this)
         setProgressBar(true)
-        viewModel.getTvShowOptions(viewModel.choose).observe(viewLifecycleOwner, { tvShow ->
-            setProgressBar(false)
-            tvShowAdapter.setTvShow(tvShow)
-            tvShowAdapter.notifyDataSetChanged()
+        viewModel.getTvShowOptions(viewModel.choose).observe(this, { tvShow ->
+            if(tvShow!=null){
+                when(tvShow.status){
+                    Status.LOADING -> setProgressBar(true)
+                    Status.SUCCESS->{
+                        setProgressBar(false)
+                        tvShowAdapter.submitList(tvShow.data)
+                        tvShowAdapter.notifyDataSetChanged()
+                    }
+                    Status.ERROR ->{
+                        setProgressBar(false)
+                        Toast.makeText(context, "Something Wrong", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         })
 
         with(fragmentTvShowBinding.rvTvshow) {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = tvShowAdapter
+            this.layoutManager = LinearLayoutManager(context)
+            this.setHasFixedSize(true)
+            this.adapter = tvShowAdapter
         }
     }
 
