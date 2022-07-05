@@ -2,12 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-def API_KEY = '"' + ApiKey + '"' ?: '"Not Found Api Key"'
-def STRING = 'String'
-
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    buildToolsVersion "30.0.1"
 
     defaultConfig {
         applicationId "com.arisurya.jetpack.filmsapp"
@@ -17,10 +14,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        each { type ->
-            type.buildConfigField STRING, 'ApiKey', API_KEY
-        }
     }
 
     buildTypes {
@@ -33,17 +26,11 @@ android {
         viewBinding true
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //kotlin
-    //noinspection DifferentStdlibGradleVersion
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$coreVersion"
 
@@ -56,7 +43,6 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:$legacyVersion"
     //noinspection GradleDependency
     implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
-    implementation "androidx.activity:activity-ktx:$activityKtx"
 
 
     //testing
@@ -68,15 +54,5 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$junitExtversion"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
     implementation "com.android.support.test.uiautomator:uiautomator-v18:$uiautomatorVersion"
-    testImplementation "org.mockito:mockito-core:$mockitoVersion"
-    testImplementation "org.mockito:mockito-inline:$mockitoVersion"
-    testImplementation "androidx.arch.core:core-testing:$androidCoreTestVersion"
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockitoKotlinVersion"
-    implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
-
-    //api
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$converterGson"
-    implementation "com.squareup.okhttp3:logging-interceptor:$logginInterceptor"
 
 }

@@ -1,8 +1,8 @@
 package com.arisurya.jetpack.filmsapp.ui.tvshow
 
-import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
+import com.arisurya.jetpack.filmsapp.data.TvShowEntity
 
 interface TvShowFragmentCallback {
-    fun onShareClick(tvShow: FilmEntity)
-    fun onVisitClick(tvShow: FilmEntity)
+    fun onShareClick(tvShow : TvShowEntity)
+    fun onVisitClick(tvShow: TvShowEntity)
 }

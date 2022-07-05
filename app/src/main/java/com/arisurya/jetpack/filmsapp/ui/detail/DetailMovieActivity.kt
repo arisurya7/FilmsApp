@@ -5,12 +5,11 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
-import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
+import com.arisurya.jetpack.filmsapp.data.MovieEntity
 import com.arisurya.jetpack.filmsapp.databinding.ActivityDetailMovieBinding
 import com.arisurya.jetpack.filmsapp.databinding.ContentDetailMovieBinding
-import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
+import com.arisurya.jetpack.filmsapp.utils.DataDummy
 import com.bumptech.glide.Glide
 
 class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
@@ -19,36 +18,35 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private lateinit var detailMovieBinding: ContentDetailMovieBinding
-    private lateinit var activityDetailMovieBinding: ActivityDetailMovieBinding
     private lateinit var viewModel: DetailMovieViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activityDetailMovieBinding = ActivityDetailMovieBinding.inflate(layoutInflater)
+        val activityDetailMovieBinding = ActivityDetailMovieBinding.inflate(layoutInflater)
         detailMovieBinding = activityDetailMovieBinding.detailContent
         setContentView(activityDetailMovieBinding.root)
 
-        val factory = ViewModelFactory.getInstance()
-
         viewModel = ViewModelProvider(
             this,
-            factory
+            ViewModelProvider.NewInstanceFactory()
         )[DetailMovieViewModel::class.java]
         val extras = intent.extras
         if (extras != null) {
             val movieId = extras.getString(EXTRA_MOVIE)
-            setProgressBar(true)
             if (movieId != null) {
                 viewModel.setSelectedMovie(movieId)
-                viewModel.getMovie().observe(this, { movie ->
-                    setProgressBar(false)
-                    populateMovie(movie)
-                })
+                for (movie in DataDummy.generateDummyMovies()) {
+                    if (movie.movieId == movieId) {
+                        populateMovie(viewModel.getMovie())
+                    }
+                }
+
+
             }
         }
     }
 
-    private fun populateMovie(movie: FilmEntity) {
+    private fun populateMovie(movie: MovieEntity) {
         detailMovieBinding.tvMovieTitle.text = movie.title
         detailMovieBinding.tvMovieRating.text = movie.rating.toString()
         detailMovieBinding.tvMovieReleased.text = movie.released
@@ -59,11 +57,11 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
         detailMovieBinding.btnShare.setOnClickListener(this)
 
         Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185${movie.imagePath}")
+            .load(movie.imagePath)
             .into(detailMovieBinding.imgBgDetail)
 
         Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185${movie.imagePath}")
+            .load(movie.imagePath)
             .into(detailMovieBinding.imgMoviePoster)
 
     }
@@ -80,46 +78,28 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun visitMovie() {
-        viewModel.getMovie().observe(this, { movie ->
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(movie.link)))
-        })
-
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.getMovie().link)))
     }
 
     private fun shareMovie() {
-        viewModel.getMovie().observe(this, { movie ->
-            val message = """
-            [Lets Watching]
-            Title           : ${movie.title}
-            Rating          : ${movie.rating}
-            Duration        : ${movie.duration}
-            Released        : ${movie.released}
-            Language        : ${movie.language}
-            Description     : ${movie.description}
-            Link            : ${movie.link}
-
-            Download FilmApps
+        val message = """
+            [Detail Movie]
+            Title           : ${viewModel.getMovie().title}
+            Rating          : ${viewModel.getMovie().rating}
+            Duration        : ${viewModel.getMovie().duration}
+            Released        : ${viewModel.getMovie().released}
+            Language        : ${viewModel.getMovie().language}
+            Description     : ${viewModel.getMovie().description}
+            Link            : ${viewModel.getMovie().link}
+            
+            Created by Ari Surya
         """.trimIndent()
-            val mimeType = "text/plain"
-            ShareCompat.IntentBuilder
-                .from(this)
-                .setType(mimeType)
-                .setChooserTitle("Share via")
-                .setText(message)
-                .startChooser()
-        })
-
-
-    }
-
-    private fun setProgressBar(state: Boolean) {
-        if (state) {
-            activityDetailMovieBinding.progressBar.visibility = View.VISIBLE
-            activityDetailMovieBinding.content.visibility = View.GONE
-        } else {
-            activityDetailMovieBinding.progressBar.visibility = View.GONE
-            activityDetailMovieBinding.content.visibility = View.VISIBLE
-        }
+        val shareIntent = Intent()
+        shareIntent.action = Intent.ACTION_SEND
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, message)
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "subject here")
+        startActivity(Intent.createChooser(shareIntent, "Share movie via"))
     }
 
 

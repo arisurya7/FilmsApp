@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.databinding.FragmentMoviesBinding
-import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
 
 
 class MoviesFragment : Fragment() {
@@ -31,12 +30,10 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         if (activity != null) {
-            val factory = ViewModelFactory.getInstance()
             viewModel = ViewModelProvider(
                 this,
-                factory
+                ViewModelProvider.NewInstanceFactory()
             )[MoviesViewModel::class.java]
             setViewModelMovie()
         }
@@ -69,26 +66,14 @@ class MoviesFragment : Fragment() {
     }
 
     private fun setViewModelMovie() {
-
+        val movie = viewModel.getMovieOptions(viewModel.choose)
         val moviesAdapter = MoviesAdapter()
-        setProgressBar(true)
-        viewModel.getMovieOptions(viewModel.choose).observe(viewLifecycleOwner, { movies ->
-            setProgressBar(false)
-            moviesAdapter.setMovies(movies)
-            moviesAdapter.notifyDataSetChanged()
-        })
-
-
+        moviesAdapter.setMovies(movie)
         with(fragmentMoviesBinding.rvMovies) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = moviesAdapter
         }
-    }
-
-    private fun setProgressBar(state: Boolean) {
-        if (state) fragmentMoviesBinding.progressBar.visibility = View.VISIBLE
-        else fragmentMoviesBinding.progressBar.visibility = View.GONE
     }
 
 

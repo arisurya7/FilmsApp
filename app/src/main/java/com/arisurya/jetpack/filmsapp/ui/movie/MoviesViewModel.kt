@@ -1,29 +1,29 @@
 package com.arisurya.jetpack.filmsapp.ui.movie
 
-
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.arisurya.jetpack.filmsapp.data.FilmsRepository
-import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
+import com.arisurya.jetpack.filmsapp.data.MovieEntity
+import com.arisurya.jetpack.filmsapp.utils.DataDummy
 
 
-class MoviesViewModel(private val filmsRepository: FilmsRepository) : ViewModel() {
-
+class MoviesViewModel : ViewModel() {
     var choose: Int = 0
 
     fun setOption(i: Int) {
         choose = i
     }
 
-    fun getMoviesDefault(): LiveData<List<FilmEntity>> = filmsRepository.getMovies()
+    fun getMoviesDefault(): List<MovieEntity> = DataDummy.generateDummyMovies()
+    fun getMoviesSortByRating(): List<MovieEntity> {
+        val movies = DataDummy.generateDummyMovies().toMutableList()
+        return movies.sortedWith(compareByDescending { it.rating })
+    }
 
-    fun getMoviesSortByRating(): LiveData<List<FilmEntity>> =
-        filmsRepository.getMoviesSortedByRating()
+    fun getMoviesSortByTitle(): List<MovieEntity> {
+        val movies = DataDummy.generateDummyMovies().toMutableList()
+        return movies.sortedWith(compareBy { it.title })
+    }
 
-    fun getMoviesSortByTitle(): LiveData<List<FilmEntity>> =
-        filmsRepository.getMoviesSortedByTitle()
-
-    fun getMovieOptions(i: Int): LiveData<List<FilmEntity>> {
+    fun getMovieOptions(i: Int): List<MovieEntity> {
         return when (i) {
             1 -> getMoviesSortByRating()
             2 -> getMoviesSortByTitle()

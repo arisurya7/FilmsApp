@@ -1,18 +1,26 @@
 package com.arisurya.jetpack.filmsapp.ui.detail
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.arisurya.jetpack.filmsapp.data.FilmsRepository
-import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
+import com.arisurya.jetpack.filmsapp.data.MovieEntity
+import com.arisurya.jetpack.filmsapp.utils.DataDummy
 
-
-class DetailMovieViewModel(private val filmsRepository: FilmsRepository) : ViewModel() {
+class DetailMovieViewModel : ViewModel() {
     private lateinit var movieId: String
 
     fun setSelectedMovie(movieId: String) {
         this.movieId = movieId
     }
 
-    fun getMovie(): LiveData<FilmEntity> = filmsRepository.getDetailMovie(movieId.toInt())
+    fun getMovie(): MovieEntity {
+        lateinit var movie: MovieEntity
+        val movieEntities = DataDummy.generateDummyMovies()
+        for (movieEntity in movieEntities) {
+            if (movieEntity.movieId == movieId) {
+                movie = movieEntity
+            }
+        }
+        return movie
+    }
+
 
 }

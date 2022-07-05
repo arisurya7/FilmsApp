@@ -1,16 +1,24 @@
 package com.arisurya.jetpack.filmsapp.ui.detail
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.arisurya.jetpack.filmsapp.data.FilmsRepository
-import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
+import com.arisurya.jetpack.filmsapp.data.TvShowEntity
+import com.arisurya.jetpack.filmsapp.utils.DataDummy
 
-class DetailTvShowViewModel(private val filmsRepository: FilmsRepository) : ViewModel() {
+class DetailTvShowViewModel : ViewModel() {
     private lateinit var showId: String
 
     fun setSelectedShow(showId: String) {
         this.showId = showId
     }
 
-    fun getTvShow(): LiveData<FilmEntity> = filmsRepository.getDetailTvShow(showId.toInt())
+    fun getTvShow(): TvShowEntity {
+        lateinit var show: TvShowEntity
+        val showEntities = DataDummy.generateDummyTvShow()
+        for (showEntity in showEntities) {
+            if (showEntity.showId == showId) {
+                show = showEntity
+            }
+        }
+        return show
+    }
 }

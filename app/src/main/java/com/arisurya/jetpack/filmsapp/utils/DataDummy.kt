@@ -1,461 +1,305 @@
 package com.arisurya.jetpack.filmsapp.utils
 
-import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
-import com.arisurya.jetpack.filmsapp.data.source.remote.response.DetailMovieResponse
-import com.arisurya.jetpack.filmsapp.data.source.remote.response.DetailTvShowResponse
-import com.arisurya.jetpack.filmsapp.data.source.remote.response.ResultsItemMovie
-import com.arisurya.jetpack.filmsapp.data.source.remote.response.ResultsItemTvShow
+import com.arisurya.jetpack.filmsapp.data.MovieEntity
+import com.arisurya.jetpack.filmsapp.data.TvShowEntity
 
 object DataDummy {
 
-    fun generateDummyMovies(): List<FilmEntity> {
-        val movies = ArrayList<FilmEntity>()
+    fun generateDummyMovies(): List<MovieEntity> {
+        val movies = ArrayList<MovieEntity>()
         movies.add(
-            FilmEntity(
-                "460465",
-                "Mortal Kombat",
-                7.7,
-                "Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe.",
-                false,
-                "1h 50m",
-                "2021-04-07",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/wrFpXMNBRj2PBiN4Z5kix51XaIZ.jpg",
-                "https://www.themoviedb.org/movie/460465"
-            )
-        )
-
-        movies.add(
-            FilmEntity(
-                "399566",
-                "Godzilla vs. Kong",
-                8.1,
-                "In a time when monsters walk the Earth, humanity’s fight for its future sets Godzilla and Kong on a collision course that will see the two most powerful forces of nature on the planet collide in a spectacular battle for the ages.",
-                false,
-                "1h 53m",
-                "2021-03-24",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg",
-                "https://www.themoviedb.org/movie/399566"
-            )
-        )
-
-        movies.add(
-            FilmEntity(
-                "615457",
-                "Nobody",
-                8.5,
-                "Hutch Mansell, a suburban dad, overlooked husband, nothing neighbor — a \\\"nobody.\\\" When two thieves break into his home one night, Hutch's unknown long-simmering rage is ignited and propels him on a brutal path that will uncover dark secrets he fought to leave behind.",
-                false,
-                "1h 32m",
-                "2021-03-26",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/oBgWY00bEFeZ9N25wWVyuQddbAo.jpg",
-                "https://www.themoviedb.org/movie/615457"
-            )
-        )
-
-        movies.add(
-            FilmEntity(
-                "567189",
-                "Tom Clancy's Without Remorse",
-                7.3,
-                "An elite Navy SEAL uncovers an international conspiracy while seeking justice for the murder of his pregnant wife.",
-                false,
-                "1h 49m",
-                "2021-04-29",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/rEm96ib0sPiZBADNKBHKBv5bve9.jpg",
-                "https://www.themoviedb.org/movie/567189"
-            )
-        )
-
-        movies.add(
-            FilmEntity(
-                "804435",
-                "Vanquish",
-                6.4,
-                "Victoria is a young mother trying to put her dark past as a Russian drug courier behind her, but retired cop Damon forces Victoria to do his bidding by holding her daughter hostage. Now, Victoria must use guns, guts and a motorcycle to take out a series of violent gangsters—or she may never see her child again.",
-                false,
-                "1h 36m",
-                "2021-04-16",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/AoWY1gkcNzabh229Icboa1Ff0BM.jpg",
-                "https://www.themoviedb.org/movie/804435"
-            )
-        )
-
-        movies.add(
-            FilmEntity(
-                "635302",
-                "Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
-                8.4,
-                "Tanjirō Kamado, joined with Inosuke Hashibira, a boy raised by boars who wears a boar's head, and Zenitsu Agatsuma, a scared boy who reveals his true power when he sleeps, boards the Infinity Train on a new mission with the Fire Hashira, Kyōjurō Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!",
-                false,
-                "1h 57m",
-                "2020-10-16",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/h8Rb9gBr48ODIwYUttZNYeMWeUU.jpg",
-                "https://www.themoviedb.org/movie/635302"
-            )
-        )
-
-        movies.add(
-            FilmEntity(
-                "632357",
-                "The Unholy",
-                5.7,
-                "Alice, a young hearing-impaired girl who, after a supposed visitation from the Virgin Mary, is inexplicably able to hear, speak and heal the sick. As word spreads and people from near and far flock to witness her miracles, a disgraced journalist hoping to revive his career visits the small New England town to investigate. When terrifying events begin to happen all around, he starts to question if these phenomena are the works of the Virgin Mary or something much more sinister.",
-                false,
-                "1h 39m",
-                "2021-03-31",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/b4gYVcl8pParX8AjkN90iQrWrWO.jpg",
-                "https://www.themoviedb.org/movie/632357"
-            )
-        )
-
-        movies.add(
-            FilmEntity(
-                "726684",
-                "Miraculous World: Shanghai – The Legend of Ladydragon",
-                7.8,
-                "To join Adrien in Shanghai, Marinette is going to visit her uncle Wang who is celebrating his anniversary. But, as soon as she arrives in China, her purse gets stolen with Tikki inside, whom she needs to secretly transform into Ladybug! Without money and alone in the immense city, Marinette accepts the help of a young and resourceful girl, Fei. The two girls will ally and discover the existence of a new magical jewel, the Prodigious. Hawk Moth, also present in Shanghai, seeks to finding it since a long time.",
-                false,
-                "52m",
-                "2021-04-04",
-                "fr",
-                "https://www.themoviedb.org/t/p/w185/msI5a9TPnepx47JUb2vl88hb80R.jpg",
-                "https://www.themoviedb.org/movie/726684"
-            )
-        )
-
-        movies.add(
-            FilmEntity(
-                "527774",
-                "Raya and the Last Dragon",
-                8.2,
-                "Long ago, in the fantasy world of Kumandra, humans and dragons lived together in harmony. But when an evil force threatened the land, the dragons sacrificed themselves to save humanity. Now, 500 years later, that same evil has returned and it’s up to a lone warrior, Raya, to track down the legendary last dragon to restore the fractured land and its divided people.",
-                false,
-                "1h 47m",
-                "2021-03-03",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/lPsD10PP4rgUGiGR4CCXA6iY0QQ.jpg",
-                "https://www.themoviedb.org/movie/527774"
-            )
-        )
-
-        movies.add(
-            FilmEntity(
-                "791373",
-                "Zack Snyder's Justice League",
-                8.5,
-                "Determined to ensure Superman's ultimate sacrifice was not in vain, Bruce Wayne aligns forces with Diana Prince with plans to recruit a team of metahumans to protect the world from an approaching threat of catastrophic proportions.",
-                false,
-                "3h 2m",
-                "2021-03-18",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/tnAuB8q5vv7Ax9UAEje5Xi4BXik.jpg",
-                "https://www.themoviedb.org/movie/791373"
-            )
-        )
-
-        return movies
-
-
-    }
-
-    fun generateDummyTvShow(): List<FilmEntity> {
-        val show = ArrayList<FilmEntity>()
-        show.add(
-            FilmEntity(
-                "88396",
-                "The Falcon and the Winter Soldier",
-                7.9,
-                "Following the events of “Avengers: Endgame”, the Falcon, Sam Wilson and the Winter Soldier, Bucky Barnes team up in a global adventure that tests their abilities, and their patience.",
-                true,
-                "50m",
-                "2021-03-19",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/6kbAMLteGO8yyewYau6bJ683sw7.jpg",
-                "https://www.themoviedb.org/tv/88396"
-            )
-        )
-
-        show.add(
-            FilmEntity(
-                "95557",
-                "Invincible",
-                8.9,
-                "Mark Grayson is a normal teenager except for the fact that his father is the most powerful superhero on the planet. Shortly after his seventeenth birthday, Mark begins to develop powers of his own and enters into his father’s tutelage.",
-                true,
-                "45m",
-                "2021-03-26",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/yDWJYRAwMNKbIYT8ZB33qy84uzO.jpg",
-                "https://www.themoviedb.org/tv/95557"
-            )
-        )
-
-        show.add(
-            FilmEntity(
-                "60735",
-                "The Flash",
-                7.7,
-                "After a particle accelerator causes a freak storm, CSI Investigator Barry Allen is struck by lightning and falls into a coma. Months later he awakens with the power of super speed, granting him the ability to move through Central City like an unseen guardian angel. Though initially excited by his newfound powers, Barry is shocked to discover he is not the only \\\"meta-human\\\" who was created in the wake of the accelerator explosion -- and not everyone is using their new powers for good. Barry partners with S.T.A.R. Labs and dedicates his life to protect the innocent. For now, only a few close friends and associates know that Barry is literally the fastest man alive, but it won't be long before the world learns what Barry Allen has become...The Flash.",
-                true,
-                "44m",
-                "2014-10-07",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/lJA2RCMfsWoskqlQhXPSLFQGXEJ.jpg",
-                "https://www.themoviedb.org/tv/60735"
-            )
-        )
-
-        show.add(
-            FilmEntity(
-                "71712",
-                "The Good Doctor",
-                8.6,
-                "A young surgeon with Savant syndrome is recruited into the surgical unit of a prestigious hospital. The question will arise: can a person who doesn't have the ability to relate to people actually save their lives",
-                true,
-                "43m",
-                "2017-09-25",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/z1K4mJwISETia59rrnMdXxzoSrZ.jpg",
-                "https://www.themoviedb.org/tv/71712"
-            )
-        )
-
-        show.add(
-            FilmEntity(
-                "1416",
-                "Grey's Anatomy",
-                8.2,
-                "Follows the personal and professional lives of a group of doctors at Seattle’s Grey Sloan Memorial Hospital.",
-                true,
-                "43m",
-                "2005-03-27",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/clnyhPqj1SNgpAdeSS6a6fwE6Bo.jpg",
-                "https://www.themoviedb.org/tv/1416"
-            )
-        )
-
-        show.add(
-            FilmEntity(
-                "97180",
-                "Selena: The Series",
+            MovieEntity(
+                "M1",
+                "A Star Is Born",
                 7.5,
-                "As Mexican-American Tejano singer Selena comes of age and realizes her dreams, she and her family make tough choices to hold on to love and music.",
-                true,
-                "40m",
-                "2020-12-04",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/mYsWyfiIMxx4HDm0Wck7oJ9ckez.jpg",
-                "https://www.themoviedb.org/tv/97180"
+                "2h 16m",
+                "2018-10-5",
+                "English",
+                "A country music star whose career is starting to fade, Jackson Maine (Bradley Cooper) discovers a very talented talent in a young musician named Ally (Lady Gaga). Maine managed to orbit Ally into a promising young star. But the two of them are involved in a relationship that goes beyond just mentors and students. As Ally and himself skyrocketed, Maine ran into a dilemma regarding this matter.",
+                "https://www.themoviedb.org/t/p/w1280/wrFpXMNBRj2PBiN4Z5kix51XaIZ.jpg",
+                "https://www.themoviedb.org/movie/332562-a-star-is-born"
             )
         )
 
-        show.add(
-            FilmEntity(
-                "79008",
-                "Luis Miguel: The Series",
+        movies.add(
+            MovieEntity(
+                "M2",
+                "Alita: Battle Angel",
+                7.2,
+                "2h 2m",
+                "2019-2-14",
+                "English",
+                "When Alita awakens with no memories of who she is in a future world she doesn't know, she is captured by Ido, a compassionate doctor who realizes that somewhere in the shell of this abandoned cyborg is the heart and soul of an extraordinary young woman.",
+                "https://www.themoviedb.org/t/p/w1280/xRWht48C2V8XNfzvPehyClOvDni.jpg",
+                "https://www.themoviedb.org/movie/399579-alita-battle-angel"
+            )
+        )
+        movies.add(
+            MovieEntity(
+                "M3",
+                "Aquaman",
+                6.9,
+                "2h 23m",
+                "2018-12-21",
+                "English",
+                "Once home to the most advanced civilization on Earth, Atlantis is now an underwater kingdom ruled by the power-hungry King Orm. With a vast army at his disposal, Orm plans to conquer the remaining oceanic people and then the surface world. Standing in his way is Arthur Curry, Orm's half-human, half-Atlantean brother and true heir to the throne.",
+                "https://www.themoviedb.org/t/p/w1280/xLPffWMhMj1l50ND3KchMjYoKmE.jpg",
+                "https://www.themoviedb.org/movie/297802-aquaman"
+            )
+        )
+        movies.add(
+            MovieEntity(
+                "M4",
+                "Bohemian Rhapsody",
                 8.0,
-                "The series dramatizes the life story of Mexican superstar singer Luis Miguel, who has captivated audiences in Latin America and beyond for decades.",
-                true,
-                "- m",
-                "2005-03-27",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/34FaY8qpjBAVysSfrJ1l7nrAQaD.jpg",
-                "https://www.themoviedb.org/tv/79008"
+                "2h 15m",
+                "2018-11-2",
+                "English",
+                "Singer Freddie Mercury, guitarist Brian May, drummer Roger Taylor and bass guitarist John Deacon take the music world by storm when they form the rock 'n' roll band Queen in 1970. Hit songs become instant classics. When Mercury's increasingly wild lifestyle starts to spiral out of control, Queen soon faces its greatest challenge yet - finding a way to keep the band together amid the success and excess.",
+                "https://www.themoviedb.org/t/p/w1280/lHu1wtNaczFPGFDTrjCSzeLPTKN.jpg",
+                "https://www.themoviedb.org/movie/424694-bohemian-rhapsody"
             )
         )
-
-        show.add(
-            FilmEntity(
-                "69478",
-                "The Handmaid's Tale",
-                8.2,
-                "Set in a dystopian future, a woman is forced to live as a concubine under a fundamentalist theocratic dictatorship. A TV adaptation of Margaret Atwood's novel.",
-                true,
-                "50m",
-                "2017-04-26",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/oIkxqt6ug5zT5ZSUUyc1Iqopf02.jpg",
-                "https://www.themoviedb.org/tv/69478"
-            )
-        )
-
-        show.add(
-            FilmEntity(
-                "63174",
-                "Lucifer",
-                8.5,
-                "Bored and unhappy as the Lord of Hell, Lucifer Morningstar abandoned his throne and retired to Los Angeles, where he has teamed up with LAPD detective Chloe Decker to take down criminals. But the longer he's away from the underworld, the greater the threat that the worst of humanity could escape.",
-                true,
-                "45m",
-                "2016-01-25",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/4EYPN5mVIhKLfxGruy7Dy41dTVn.jpg",
-                "https://www.themoviedb.org/tv/63174"
-            )
-        )
-
-        show.add(
-            FilmEntity(
-                "69050",
-                "Riverdale",
-                8.6,
-                "Set in the present, the series offers a bold, subversive take on Archie, Betty, Veronica and their friends, exploring the surreality of small-town life, the darkness and weirdness bubbling beneath Riverdale’s wholesome facade.",
-                true,
-                "45m",
-                "2017-01-26",
-                "en",
-                "https://www.themoviedb.org/t/p/w185/wRbjVBdDo5qHAEOVYoMWpM58FSA.jpg",
-                "https://www.themoviedb.org/tv/69050"
-            )
-        )
-
-        return show
-    }
-
-    fun generateRemoteDummyMovies(): List<ResultsItemMovie> {
-
-        val movies = ArrayList<ResultsItemMovie>()
-
         movies.add(
-            ResultsItemMovie(
-                460465,
-                "Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe.",
-                "Mortal Kombat",
-                "/wrFpXMNBRj2PBiN4Z5kix51XaIZ.jpg",
-                7.7
+            MovieEntity(
+                "M5",
+                "Cold Pursuit",
+                5.7,
+                "1h 59m",
+                "2019-2-8",
+                "English",
+                "The quiet family life of Nels Coxman, a snowplow driver, is upended after his son's murder. Nels begins a vengeful hunt for Viking, the drug lord he holds responsible for the killing, eliminating Viking's associates one by one. As Nels draws closer to Viking, his actions bring even more unexpected and violent consequences, as he proves that revenge is all in the execution.",
+                "https://www.themoviedb.org/t/p/w1280/hXgmWPd1SuujRZ4QnKLzrj79PAw.jpg",
+                "https://www.themoviedb.org/movie/438650-cold-pursuit"
             )
         )
-
         movies.add(
-            ResultsItemMovie(
-                399566,
-                "In a time when monsters walk the Earth, humanity’s fight for its future sets Godzilla and Kong on a collision course that will see the two most powerful forces of nature on the planet collide in a spectacular battle for the ages.",
-                "Godzilla vs. Kong",
-                "/pgqgaUx1cJb5oZQQ5v0tNARCeBp.jpg",
-                8.1
+            MovieEntity(
+                "M6",
+                "Creed II",
+                6.9,
+                "2h 10m",
+                "2018-11-21",
+                "English",
+                "Between personal obligations and training for his next big fight against an opponent with ties to his family's past, Adonis Creed is up against the challenge of his life.",
+                "https://www.themoviedb.org/t/p/w1280/qPQFWrLoQYyGxmeBgmpX901Q0mF.jpg",
+                "https://www.themoviedb.org/movie/480530-creed-ii"
             )
         )
-
         movies.add(
-            ResultsItemMovie(
-                615457,
-                "Hutch Mansell, a suburban dad, overlooked husband, nothing neighbor — a \\\\\\\"nobody.\\\\\\\" When two thieves break into his home one night, Hutch's unknown long-simmering rage is ignited and propels him on a brutal path that will uncover dark secrets he fought to leave behind.",
-                "Nobody",
-                "/oBgWY00bEFeZ9N25wWVyuQddbAo.jpg",
-                8.5
+            MovieEntity(
+                "M7",
+                "Crimes Grindelwald",
+                6.9,
+                "2h",
+                "2018-11-16",
+                "English",
+                "Gellert Grindelwald has escaped from prison and has begun gathering followers towards his goal - exalting witches above all non-magical creatures. The only one who can stop him is the wizard he once called his closest friend, Albus Dumbledore. However, Dumbledore will need to seek help from the witch who thwarted Grindelwald earlier, his former student, Newt Scamander, who agrees to help, unaware of the dangers that lie ahead. Lines are drawn as love and loyalty are tested, even among true friends and family, in an increasingly divided wizarding world.",
+                "https://www.themoviedb.org/t/p/w1280/7IgyMP3YDAPt2PFqu50UcVqqRlG.jpg",
+                "https://www.themoviedb.org/movie/338952-fantastic-beasts-the-crimes-of-grindelwald"
             )
         )
-
         movies.add(
-            ResultsItemMovie(
-                567189,
-                "An elite Navy SEAL uncovers an international conspiracy while seeking justice for the murder of his pregnant wife.",
-                "Tom Clancy's Without Remorse",
-                "/rEm96ib0sPiZBADNKBHKBv5bve9.jpg",
-                7.3
+            MovieEntity(
+                "M8",
+                "Glass",
+                6.7,
+                "2h 9m",
+                "2019-1-18",
+                "English",
+                "In a series of escalating encounters, former security guard David Dunn uses his supernatural abilities to track Kevin Wendell Crumb, a disturbed man who has twenty-four personalities. Meanwhile, the shadowy presence of Elijah Price emerges as an orchestrator who holds critical secrets to both men.",
+                "https://www.themoviedb.org/t/p/w1280/svIDTNUoajS8dLEo7EosxvyAsgJ.jpg",
+                "https://www.themoviedb.org/movie/450465-glass"
             )
         )
-
         movies.add(
-            ResultsItemMovie(
-                804435,
-                "Victoria is a young mother trying to put her dark past as a Russian drug courier behind her, but retired cop Damon forces Victoria to do his bidding by holding her daughter hostage. Now, Victoria must use guns, guts and a motorcycle to take out a series of violent gangsters—or she may never see her child again.",
-                "Vanquish",
-                "/AoWY1gkcNzabh229Icboa1Ff0BM.jpg",
-                6.4
+            MovieEntity(
+                "M9",
+                "How to Train Your Dragon",
+                7.8,
+                "1h 44m",
+                "2019-1-9",
+                "English",
+                "When Hiccup fulfills his dream of creating a peaceful dragon utopia, Toothless' discovery of an untested and elusive partner drives Night Fury away. As the danger increases in the house and Hiccup's reign as village chief is put to the test, both the dragon and the rider must make the impossible decision to save their kind.",
+                "https://www.themoviedb.org/t/p/w1280/bCYRgsT0Kndh23a6kHazBdXWCn1.jpg",
+                "https://www.themoviedb.org/movie/166428-how-to-train-your-dragon-3"
+            )
+        )
+        movies.add(
+            MovieEntity(
+                "M10",
+                "Avengers: Infinity War",
+                8.3,
+                "2h 29m",
+                "2018-4-27",
+                "English",
+                "As the Avengers and their allies continue to protect the world from threats too big for a single hero to handle, a new danger has emerged from the cosmic shadow: Thanos. An intergalactic blasphemy despot, his goal is to collect all six Infinity Stones, an unimaginable power artifact, and use them to inflict a twisted will on all realities. Everything the Avengers have fought for has evolved to date - Earth's fate and existence itself have never been more certain.",
+                "https://www.themoviedb.org/t/p/w1280/ksBQ4oHQDdJwND8H90ay8CbMihU.jpg",
+                "https://www.themoviedb.org/movie/299536-avengers-infinity-war"
+            )
+        )
+        movies.add(
+            MovieEntity(
+                "M11",
+                "Overload",
+                6.7,
+                "1h 50m",
+                "2018-11-9",
+                "English",
+                "France, June 1944. On the eve of D-Day, some American paratroopers fall behind enemy lines after their aircraft crashes while on a mission to destroy a radio tower in a small village near the beaches of Normandy. After reaching their target, the surviving paratroopers realize that, in addition to fighting the Nazi troops that patrol the village, they also must fight against something else.",
+                "https://www.themoviedb.org/t/p/w1280/2Sfo3O54kTAAnBfZaCXrwimORSo.jpg",
+                "https://www.themoviedb.org/movie/438799-overlord"
             )
         )
 
         return movies
     }
 
-    fun generateRemoteDummyTvShow(): List<ResultsItemTvShow> {
-        val tvShows = ArrayList<ResultsItemTvShow>()
-
-        tvShows.add(
-            ResultsItemTvShow(
-                88396,
-                "Following the events of “Avengers: Endgame”, the Falcon, Sam Wilson and the Winter Soldier, Bucky Barnes team up in a global adventure that tests their abilities, and their patience.",
-                7.9,
-                "The Falcon and the Winter Soldier",
-                "/6kbAMLteGO8yyewYau6bJ683sw7.jpg"
+    fun generateDummyTvShow(): List<TvShowEntity> {
+        val show = ArrayList<TvShowEntity>()
+        show.add(
+            TvShowEntity(
+                "T1",
+                "The Arrow",
+                6.6,
+                "42m",
+                "2012-10-10",
+                "English",
+                "Arrows is a retelling of the adventures of the legendary DC hero Green Arrow",
+                "https://www.themoviedb.org/t/p/w1280/gKG5QGz5Ngf8fgWpBsWtlg5L2SF.jpg",
+                "https://www.themoviedb.org/tv/1412-arrow"
             )
         )
-
-        tvShows.add(
-            ResultsItemTvShow(
-                95557,
-                "Mark Grayson is a normal teenager except for the fact that his father is the most powerful superhero on the planet. Shortly after his seventeenth birthday, Mark begins to develop powers of his own and enters into his father’s tutelage.",
-                8.9,
-                "Invincible",
-                "/yDWJYRAwMNKbIYT8ZB33qy84uzO.jpg"
+        show.add(
+            TvShowEntity(
+                "T2",
+                "Doom Patrol",
+                7.6,
+                "49m",
+                "2019-2-15",
+                "English",
+                "The Doom Patrol's members each horrible accidents that gave them superhuman abilities - but also left them scarred and disfigured. Traumatized and downtrodden, the team found purpose through The Chief, who brought them together to investigate the weirdest phenomena in existence - and to protect Earth from what they find.",
+                "https://www.themoviedb.org/t/p/w1280/nclcURTdlqVbDr6HPmrHC5X4qUu.jpg",
+                "https://www.themoviedb.org/tv/79501-doom-patrol"
             )
         )
-
-        tvShows.add(
-            ResultsItemTvShow(
-                60735,
-                "After a particle accelerator causes a freak storm, CSI Investigator Barry Allen is struck by lightning and falls into a coma. Months later he awakens with the power of super speed, granting him the ability to move through Central City like an unseen guardian angel. Though initially excited by his newfound powers, Barry is shocked to discover he is not the only \\\\\\\"meta-human\\\\\\\" who was created in the wake of the accelerator explosion -- and not everyone is using their new powers for good. Barry partners with S.T.A.R. Labs and dedicates his life to protect the innocent. For now, only a few close friends and associates know that Barry is literally the fastest man alive, but it won't be long before the world learns what Barry Allen has become...The Flash.",
+        show.add(
+            TvShowEntity(
+                "T3",
+                "Supergirl",
+                7.3,
+                "42m",
+                "2015-10-26",
+                "English",
+                "Twenty-four-year-old Kara Zor-El, who was taken in by the Danvers family when she was 13 after being sent away from Krypton, must learn to embrace her powers after previously hiding them. The Danvers teach her to be careful with her powers, until she has to reveal them during an unexpected disaster, setting her on her journey of heroism.",
+                "https://www.themoviedb.org/t/p/w1280/vqBsgL9nd2v04ZvCqPzwtckDdFD.jpg",
+                "https://www.themoviedb.org/tv/62688-supergirl"
+            )
+        )
+        show.add(
+            TvShowEntity(
+                "T4",
+                "The Umbrella Academy",
+                8.7,
+                "55m",
+                "2019-2-14",
+                "English",
+                "A dysfunctional family of superheroes comes together to solve the mystery of their father's death, the threat of the apocalypse and more.",
+                "https://www.themoviedb.org/t/p/w1280/uYHdIs5O8tiU5p6MvUPd2jElOH6.jpg",
+                "https://www.themoviedb.org/tv/75006-umbrella-academy"
+            )
+        )
+        show.add(
+            TvShowEntity(
+                "T5",
+                "Flash",
                 7.7,
-                "The Flash",
-                "/lJA2RCMfsWoskqlQhXPSLFQGXEJ.jpg"
+                "44m",
+                "2014-10-7",
+                "English",
+                "After a particle accelerator causes a freak storm, CSI Investigator Barry Allen is struck by lightning and falls into a coma. Several months later he awakens with the power of superhuman speed, giving him the ability to move through Central City like an invisible guardian angel. Although initially delighted by his new powers, Barry is surprised to find that he is not the only \"meta-human\" created after the accelerator explosion - and not everyone is using their new powers for good. Barry partnered with S.T.A.R. Lab and dedicate his life to protecting the innocent. For now, only a few close friends and associates know that Barry is literally the fastest human being, but it won't be long before the world finds out what Barry Allen ... The Flash is all about.",
+                "https://www.themoviedb.org/t/p/w1280/wHa6KOJAoNTFLFtp7wguUJKSnju.jpg",
+                "https://www.themoviedb.org/tv/60735-the-flash"
             )
         )
-
-        tvShows.add(
-            ResultsItemTvShow(
-                71712,
-                "A young surgeon with Savant syndrome is recruited into the surgical unit of a prestigious hospital. The question will arise: can a person who doesn't have the ability to relate to people actually save their lives",
-                8.6,
-                "The Good Doctor",
-                "/z1K4mJwISETia59rrnMdXxzoSrZ.jpg"
+        show.add(
+            TvShowEntity(
+                "T6",
+                "The Simpsons",
+                7.8,
+                "22m",
+                "1989-12-17",
+                "English",
+                "Set in Springfield, America's average city, this show focuses on the antics and everyday adventures of the Simpson family; Homer, Marge, Bart, Lisa and Maggie, as well as thousands of virtual players. Since its inception, the series has become a pop culture icon, drawing hundreds of celebrities to guest appearances. The show has also become famous for its fearless satire on political life, the media, and America in general.",
+                "https://www.themoviedb.org/t/p/w1280/qcr9bBY6MVeLzriKCmJOv1562uY.jpg",
+                "https://www.themoviedb.org/tv/456-the-simpsons"
             )
         )
-
-        tvShows.add(
-            ResultsItemTvShow(
-                1416,
-                "Follows the personal and professional lives of a group of doctors at Seattle’s Grey Sloan Memorial Hospital.",
-                8.2,
+        show.add(
+            TvShowEntity(
+                "T7",
+                "Shameless",
+                8.0,
+                "57m",
+                "2011-1-9",
+                "English",
+                "Chicagoan Frank Gallagher is the proud single dad of six smart, industrious, independent kids, who without him would be ... perhaps better off. When Frank's not at the bar spending what little money they have, he's passed out on the floor. But the kids have found ways to grow up in spite of him. They may not be like any family you know, but they make no apologies for being exactly who they are.",
+                "https://www.themoviedb.org/t/p/w1280/m2gf7SYOq9z30Q1dJFMF51DfrmF.jpg",
+                "https://www.themoviedb.org/tv/34307-shameless"
+            )
+        )
+        show.add(
+            TvShowEntity(
+                "T8",
                 "Grey's Anatomy",
-                "/clnyhPqj1SNgpAdeSS6a6fwE6Bo.jpg"
+                8.2,
+                "43m",
+                "2005-2-27",
+                "English",
+                "Follow the personal and professional lives of a group of doctors at the Gray Sloan Memorial Hospital in Seattle.",
+                "https://www.themoviedb.org/t/p/w1280/clnyhPqj1SNgpAdeSS6a6fwE6Bo.jpg",
+                "https://www.themoviedb.org/tv/1416-grey-s-anatomy"
             )
         )
-
-        return tvShows
-    }
-
-    fun generateRemoteDummyDetailMovie(): DetailMovieResponse {
-        return DetailMovieResponse(
-            460465,
-            "Mortal Kombat",
-            "/wrFpXMNBRj2PBiN4Z5kix51XaIZ.jpg",
-            "2021-04-07",
-            "en",
-            "Washed-up MMA fighter Cole Young, unaware of his heritage, and hunted by Emperor Shang Tsung's best warrior, Sub-Zero, seeks out and trains with Earth's greatest champions as he prepares to stand against the enemies of Outworld in a high stakes battle for the universe.",
-            7.7,
-            110
+        show.add(
+            TvShowEntity(
+                "T9",
+                "Hanna",
+                7.5,
+                "50m",
+                "2019-3-28",
+                "English",
+                "This thriller and coming-of-age drama follows the journey of an extraordinary young girl as she evades the relentless pursuit of an off-book CIA agent and tries to unearth the truth behind who she is. Based on the 2011 Joe Wright film.",
+                "https://www.themoviedb.org/t/p/w1280/qjQWlL4CcjPdgw3f9o7jguXN97A.jpg",
+                "https://www.themoviedb.org/tv/54155-hanna"
+            )
         )
-    }
-
-    fun generateRemoteDummyDetailTvShow(): DetailTvShowResponse {
-        return DetailTvShowResponse(
-            88396,
-            "2021-03-19",
-            "The Falcon and the Winter Soldier",
-            "en",
-            "Following the events of “Avengers: Endgame”, the Falcon, Sam Wilson and the Winter Soldier, Bucky Barnes team up in a global adventure that tests their abilities, and their patience.",
-            "6kbAMLteGO8yyewYau6bJ683sw7.jpg",
-            7.9,
-            listOf()
+        show.add(
+            TvShowEntity(
+                "T10",
+                "Family Guy",
+                7.0,
+                "22m",
+                "1999-2-31",
+                "English",
+                "The sick, twisted and wrong animated animated series Freakin 'Sweet, features the adventures of the dysfunctional Griffin family. Clumsy Peter and long-suffering Lois have three children. Stewie (a brilliant but sadistic baby bent on killing his mother and taking over the world), Meg (the oldest, and most unpopular girl in town) and Chris (middle child, she is not very smart but has a passion for movies). The last member of the family is Brian - a talking dog and more than just a pet, he looks after Stewie, while sipping Martinis and sorting out his own life problems.",
+                "https://www.themoviedb.org/t/p/w1280/q3E71oY6qgAEiw6YZIHDlHSLwer.jpg",
+                "https://www.themoviedb.org/tv/1434-family-guy"
+            )
         )
+        show.add(
+            TvShowEntity(
+                "T11",
+                "Marvel's Iron Fist",
+                6.6,
+                "55m",
+                "2017-33-17",
+                "English",
+                "Danny Rand resurfaces 15 years after being presumed dead. Now, with the power of the Iron Fist, he seeks to reclaim his past and fulfill his destiny.",
+                "https://www.themoviedb.org/t/p/w1280/9sYiKhHzfO1zhbVS2XID3gFe6Kx.jpg",
+                "https://www.themoviedb.org/tv/62127-marvel-s-iron-fist"
+            )
+        )
+        return show
     }
 }

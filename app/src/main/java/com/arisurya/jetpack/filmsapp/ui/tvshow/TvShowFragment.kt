@@ -9,9 +9,8 @@ import androidx.core.app.ShareCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arisurya.jetpack.filmsapp.R
-import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
+import com.arisurya.jetpack.filmsapp.data.TvShowEntity
 import com.arisurya.jetpack.filmsapp.databinding.FragmentTvShowBinding
-import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
 
 
 class TvShowFragment : Fragment(), TvShowFragmentCallback {
@@ -37,16 +36,15 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
         super.onViewCreated(view, savedInstanceState)
 
         if (activity != null) {
-            val factory = ViewModelFactory.getInstance()
             viewModel = ViewModelProvider(
                 this,
-                factory
+                ViewModelProvider.NewInstanceFactory()
             )[TvShowViewModel::class.java]
             setViewModelTvShow()
         }
     }
 
-    override fun onShareClick(tvShow: FilmEntity) {
+    override fun onShareClick(tvShow: TvShowEntity) {
         if (activity != null) {
             val mimeType = "text/plain"
             ShareCompat.IntentBuilder
@@ -58,7 +56,7 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
         }
     }
 
-    override fun onVisitClick(tvShow: FilmEntity) {
+    override fun onVisitClick(tvShow: TvShowEntity) {
         if (activity != null) {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(tvShow.link)))
         }
@@ -90,24 +88,13 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
     }
 
     private fun setViewModelTvShow() {
-
+        val tvShow = viewModel.getTvShowOptions(viewModel.choose)
         val tvShowAdapter = TvShowAdapter(this)
-        setProgressBar(true)
-        viewModel.getTvShowOptions(viewModel.choose).observe(viewLifecycleOwner, { tvShow ->
-            setProgressBar(false)
-            tvShowAdapter.setTvShow(tvShow)
-            tvShowAdapter.notifyDataSetChanged()
-        })
-
+        tvShowAdapter.setTvShow(tvShow)
         with(fragmentTvShowBinding.rvTvshow) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = tvShowAdapter
         }
-    }
-
-    private fun setProgressBar(state: Boolean) {
-        if (state) fragmentTvShowBinding.progressBar.visibility = View.VISIBLE
-        else fragmentTvShowBinding.progressBar.visibility = View.GONE
     }
 }
