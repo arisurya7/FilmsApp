@@ -59,7 +59,7 @@ class FavoriteMovieViewModelTest {
     }
 
     @Test
-    fun setFavorite(){
+    fun setFavorite() {
         viewModel.setFavorite(DataDummy.generateDummyMovies()[0])
         verify(filmsRepository).setFavoriteFilm(DataDummy.generateDummyMovies()[0], true)
         verifyNoMoreInteractions(filmsRepository)

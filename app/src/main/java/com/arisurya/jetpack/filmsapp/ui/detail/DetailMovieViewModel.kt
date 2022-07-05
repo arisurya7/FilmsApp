@@ -10,7 +10,7 @@ import com.arisurya.jetpack.filmsapp.vo.Resource
 
 
 class DetailMovieViewModel(private val filmsRepository: FilmsRepository) : ViewModel() {
-    var movieId = MutableLiveData<String>()
+    private var movieId = MutableLiveData<String>()
 
     fun setSelectedMovie(movieId: String) {
         this.movieId.value = movieId
@@ -20,20 +20,6 @@ class DetailMovieViewModel(private val filmsRepository: FilmsRepository) : ViewM
         Transformations.switchMap(movieId) { mMovieId ->
             movieId.value?.let { filmsRepository.getDetailMovie(mMovieId.toInt()) }
         }
-
-    fun getMovieDetail(): LiveData<Resource<FilmEntity>> = detailMovie
-
-//    fun setMovieFavorite() {
-//        val movieResource = detailMovie.value
-//        if (movieResource != null) {
-//            val filmEntity = movieResource.data
-//            if (filmEntity != null) {
-//                val newState = !filmEntity.favorite
-//                filmsRepository.setFavoriteFilm(filmEntity, newState)
-//            }
-//        }
-//
-//    }
 
     fun setMovieFavorite(filmEntity: FilmEntity) {
         val newState = !filmEntity.favorite

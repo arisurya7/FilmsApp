@@ -11,25 +11,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.databinding.FragmentFavoriteTvShowBinding
-import com.arisurya.jetpack.filmsapp.ui.favorite.favmovie.FavoriteMovieAdapter
-import com.arisurya.jetpack.filmsapp.ui.favorite.favmovie.FavoriteMovieViewModel
 import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_favorite_movie.*
 
 
 class FavoriteTvShowFragment : Fragment() {
 
-    private lateinit var fragmentFavoriteTvShowViewBinding : FragmentFavoriteTvShowBinding
+    private lateinit var fragmentFavoriteTvShowViewBinding: FragmentFavoriteTvShowBinding
     private lateinit var viewModel: FavoriteTvShowViewModel
-    private lateinit var favTvShowAdapter : FavoriteTvShowAdapter
+    private lateinit var favTvShowAdapter: FavoriteTvShowAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        fragmentFavoriteTvShowViewBinding = FragmentFavoriteTvShowBinding.inflate(layoutInflater, container, false)
+        fragmentFavoriteTvShowViewBinding =
+            FragmentFavoriteTvShowBinding.inflate(layoutInflater, container, false)
         return fragmentFavoriteTvShowViewBinding.root
     }
 
@@ -38,7 +36,7 @@ class FavoriteTvShowFragment : Fragment() {
 
         itemTouchHelper.attachToRecyclerView(fragmentFavoriteTvShowViewBinding.rvFavTvShow)
 
-        if(activity!=null){
+        if (activity != null) {
             val factory = ViewModelFactory.getInstance(requireActivity())
             viewModel = ViewModelProvider(
                 this,
@@ -48,10 +46,10 @@ class FavoriteTvShowFragment : Fragment() {
             favTvShowAdapter = FavoriteTvShowAdapter()
             setProgressBar(true)
             viewModel.getFavoriteTvShow().observe(this, { favTvShow ->
-                if (favTvShow!= null) {
+                if (favTvShow != null) {
                     setProgressBar(false)
-                    if(favTvShow.size == 0) setImageNoData(true)
-                    else setImageNoData(false)
+                    if (favTvShow.size == 0) setImageNoFavorite(true)
+                    else setImageNoFavorite(false)
                     favTvShowAdapter.submitList(favTvShow)
                 }
             })
@@ -71,18 +69,17 @@ class FavoriteTvShowFragment : Fragment() {
         else fragmentFavoriteTvShowViewBinding.progressBar.visibility = View.GONE
     }
 
-    private fun setImageNoData(state: Boolean){
-        if(state){
+    private fun setImageNoFavorite(state: Boolean) {
+        if (state) {
             fragmentFavoriteTvShowViewBinding.imgNoData.visibility = View.VISIBLE
             fragmentFavoriteTvShowViewBinding.tvEmpty.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             fragmentFavoriteTvShowViewBinding.imgNoData.visibility = View.GONE
             fragmentFavoriteTvShowViewBinding.tvEmpty.visibility = View.GONE
         }
     }
 
-    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback(){
+    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
         override fun getMovementFlags(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder
@@ -97,13 +94,14 @@ class FavoriteTvShowFragment : Fragment() {
         ): Boolean = true
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            if(view!=null){
+            if (view != null) {
                 val swipedPosition = viewHolder.adapterPosition
                 val filmEntity = favTvShowAdapter.getSwipedData(swipedPosition)
                 filmEntity?.let { viewModel.setFavorite(it) }
 
-                val snackBar = Snackbar.make(view as View,R.string.message_cancel, Snackbar.LENGTH_LONG)
-                snackBar.setAction(R.string.message_confirm){
+                val snackBar =
+                    Snackbar.make(view as View, R.string.message_cancel, Snackbar.LENGTH_LONG)
+                snackBar.setAction(R.string.message_confirm) {
                     filmEntity?.let { viewModel.setFavorite(it) }
                 }
                 snackBar.show()

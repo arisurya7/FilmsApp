@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.databinding.ListItemsMoviesBinding
-import com.arisurya.jetpack.filmsapp.ui.detail.DetailMovieActivity
 import com.arisurya.jetpack.filmsapp.ui.detail.DetailTvShowActivity
 import com.bumptech.glide.Glide
 
-class FavoriteTvShowAdapter : PagedListAdapter<FilmEntity, FavoriteTvShowAdapter.FavoriteTvShowViewHolder>(DIFF_CALLBACK) {
+class FavoriteTvShowAdapter :
+    PagedListAdapter<FilmEntity, FavoriteTvShowAdapter.FavoriteTvShowViewHolder>(DIFF_CALLBACK) {
 
-    companion object{
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>(){
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>() {
             override fun areItemsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
                 return oldItem.filmId == newItem.filmId
             }
@@ -27,13 +27,6 @@ class FavoriteTvShowAdapter : PagedListAdapter<FilmEntity, FavoriteTvShowAdapter
         }
     }
 
-    private var listTvShow = ArrayList<FilmEntity>()
-
-    fun setFavoriteTvShow(movies: List<FilmEntity>?) {
-        if (movies == null) return
-        this.listTvShow.clear()
-        this.listTvShow.addAll(movies)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteTvShowViewHolder {
         val listItemsMoviesBinding =
@@ -43,10 +36,8 @@ class FavoriteTvShowAdapter : PagedListAdapter<FilmEntity, FavoriteTvShowAdapter
 
     override fun onBindViewHolder(holder: FavoriteTvShowViewHolder, position: Int) {
         val favTvShow = getItem(position)
-        if(favTvShow!=null) holder.bind(favTvShow)
+        if (favTvShow != null) holder.bind(favTvShow)
     }
-
-//    override fun getItemCount(): Int = listTvShow.size
 
 
     class FavoriteTvShowViewHolder(private val binding: ListItemsMoviesBinding) :
@@ -71,5 +62,5 @@ class FavoriteTvShowAdapter : PagedListAdapter<FilmEntity, FavoriteTvShowAdapter
 
     }
 
-    fun getSwipedData(swipedPosition : Int): FilmEntity? = getItem(swipedPosition)
+    fun getSwipedData(swipedPosition: Int): FilmEntity? = getItem(swipedPosition)
 }

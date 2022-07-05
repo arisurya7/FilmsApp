@@ -9,6 +9,7 @@ import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.vo.Resource
 
 
+@Suppress("MemberVisibilityCanBePrivate")
 class MoviesViewModel(private val filmsRepository: FilmsRepository) : ViewModel() {
 
     var choose: Int = 0

@@ -9,20 +9,19 @@ import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.vo.Resource
 
 class DetailTvShowViewModel(private val filmsRepository: FilmsRepository) : ViewModel() {
-    var showId = MutableLiveData<String>()
+    private var showId = MutableLiveData<String>()
 
     fun setSelectedShow(showId: String) {
         this.showId.value = showId
     }
 
-    var detailTvShow: LiveData<Resource<FilmEntity>> = Transformations.switchMap(showId) { mShowId ->
-        showId.value?.let { filmsRepository.getDetailTvShow(mShowId.toInt()) }
-    }
+    var detailTvShow: LiveData<Resource<FilmEntity>> =
+        Transformations.switchMap(showId) { mShowId ->
+            showId.value?.let { filmsRepository.getDetailTvShow(mShowId.toInt()) }
+        }
 
-    fun getTvShowDetail():LiveData<Resource<FilmEntity>> = detailTvShow
-
-    fun setTvShowFavorite(filmEntity: FilmEntity){
+    fun setTvShowFavorite(filmEntity: FilmEntity) {
         val newState = !filmEntity.favorite
-        filmsRepository.setFavoriteFilm(filmEntity,newState)
+        filmsRepository.setFavoriteFilm(filmEntity, newState)
     }
 }

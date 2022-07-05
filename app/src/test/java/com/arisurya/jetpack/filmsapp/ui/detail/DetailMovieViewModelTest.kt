@@ -4,19 +4,18 @@ package com.arisurya.jetpack.filmsapp.ui.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.paging.DataSource
 import com.arisurya.jetpack.filmsapp.data.FilmsRepository
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 import com.arisurya.jetpack.filmsapp.utils.DataDummy
 import com.arisurya.jetpack.filmsapp.vo.Resource
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -50,14 +49,14 @@ class DetailMovieViewModelTest {
         movie.value = dummyDetailMovie
 
         `when`(filmsRepository.getDetailMovie(movieId.toInt())).thenReturn(movie)
-        val movieEntity = viewModel.getMovieDetail()
+        val movieEntity = viewModel.detailMovie
         assertNotNull(movieEntity)
         viewModel.detailMovie.observeForever(observer)
         verify(observer).onChanged(dummyDetailMovie)
     }
 
     @Test
-    fun setMovieFavorite(){
+    fun setMovieFavorite() {
         viewModel.setMovieFavorite(DataDummy.generateDummyMovies()[0])
         verify(filmsRepository).setFavoriteFilm(DataDummy.generateDummyMovies()[0], true)
         verifyNoMoreInteractions(filmsRepository)

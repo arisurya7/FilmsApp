@@ -8,10 +8,9 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.ui.favorite.favmovie.FavoriteMovieFragment
 import com.arisurya.jetpack.filmsapp.ui.favorite.favtvshow.FavoriteTvShowFragment
-import com.arisurya.jetpack.filmsapp.ui.movie.MoviesFragment
-import com.arisurya.jetpack.filmsapp.ui.tvshow.TvShowFragment
 
-class FavoriteSectionPagerAdapter (private val mContext: Context, fm: FragmentManager) :
+
+class FavoriteSectionPagerAdapter(private val mContext: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     companion object {

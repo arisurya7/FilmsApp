@@ -13,32 +13,32 @@ data class FilmEntity(
     var filmId: String,
 
     @ColumnInfo(name = "title")
-    var title: String="",
+    var title: String = "",
 
     @ColumnInfo(name = "rating")
-    var rating: Double=0.0,
+    var rating: Double = 0.0,
 
     @ColumnInfo(name = "description")
-    var description: String="",
+    var description: String = "",
 
     @ColumnInfo(name = "tvShow")
-    var tvShow : Boolean=false,
+    var tvShow: Boolean = false,
 
     @ColumnInfo(name = "Duration")
-    var duration: String="",
+    var duration: String = "",
 
     @ColumnInfo(name = "released")
-    var released: String="",
+    var released: String = "",
 
     @ColumnInfo(name = "language")
-    var language: String="",
+    var language: String = "",
 
     @ColumnInfo(name = "imagePath")
-    var imagePath: String="",
+    var imagePath: String = "",
 
     @ColumnInfo(name = "link")
-    var link: String="",
+    var link: String = "",
 
     @ColumnInfo(name = "favorite")
-    var favorite: Boolean=false
+    var favorite: Boolean = false
 )

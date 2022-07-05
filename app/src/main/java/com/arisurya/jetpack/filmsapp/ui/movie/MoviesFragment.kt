@@ -66,8 +66,8 @@ class MoviesFragment : Fragment() {
                 viewModel.setOption(2)
                 setViewModelMovie()
             }
-            R.id.fav->{
-                startActivity(Intent (activity, FavoriteActivity::class.java))
+            R.id.fav -> {
+                startActivity(Intent(activity, FavoriteActivity::class.java))
             }
         }
 
@@ -88,7 +88,7 @@ class MoviesFragment : Fragment() {
                     }
                     Status.ERROR -> {
                         setProgressBar(false)
-                        Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Something Wrong", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

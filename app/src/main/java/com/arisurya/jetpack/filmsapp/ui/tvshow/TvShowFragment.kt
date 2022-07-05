@@ -110,7 +110,7 @@ class TvShowFragment : Fragment(), TvShowFragmentCallback {
                     }
                     Status.ERROR ->{
                         setProgressBar(false)
-                        Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Something Wrong", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

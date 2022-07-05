@@ -2,29 +2,28 @@ package com.arisurya.jetpack.filmsapp.data.source.local.room
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import androidx.paging.PagedList
 import androidx.room.*
 import com.arisurya.jetpack.filmsapp.data.source.local.entity.FilmEntity
 
 @Dao
 interface FilmDao {
     @Query("SELECT * FROM filmentities WHERE tvShow = 0")
-    fun getMovies(): DataSource.Factory<Int,FilmEntity>
+    fun getMovies(): DataSource.Factory<Int, FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow=0 ORDER BY rating DESC")
-    fun getMoviesSortRating(): DataSource.Factory<Int,FilmEntity>
+    fun getMoviesSortRating(): DataSource.Factory<Int, FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow=0 ORDER BY title ASC")
-    fun getMoviesSortTitle(): DataSource.Factory<Int,FilmEntity>
+    fun getMoviesSortTitle(): DataSource.Factory<Int, FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow=1")
-    fun getTvShows():DataSource.Factory<Int,FilmEntity>
+    fun getTvShows(): DataSource.Factory<Int, FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow=1 ORDER BY rating DESC")
-    fun getTvShowSortRating(): DataSource.Factory<Int,FilmEntity>
+    fun getTvShowSortRating(): DataSource.Factory<Int, FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE tvShow=1 ORDER BY title ASC")
-    fun getTvShowSortTitle(): DataSource.Factory<Int,FilmEntity>
+    fun getTvShowSortTitle(): DataSource.Factory<Int, FilmEntity>
 
     @Query("SELECT * FROM filmentities WHERE filmId = :filmId")
     fun getDetailFilm(filmId: String): LiveData<FilmEntity>

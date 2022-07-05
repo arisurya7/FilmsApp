@@ -16,6 +16,7 @@ import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
 import com.arisurya.jetpack.filmsapp.vo.Status
 import com.bumptech.glide.Glide
 
+@Suppress("NestedLambdaShadowedImplicitParameter", "DEPRECATION")
 class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
         const val EXTRA_MOVIE = "extra_movie"
@@ -40,13 +41,11 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
             this,
             factory
         )[DetailMovieViewModel::class.java]
-        val extras = intent.extras
-        if (extras != null) {
-            val movieId = extras.getString(EXTRA_MOVIE)
-            setProgressBar(true)
-            if (movieId != null) {
-                viewModel.setSelectedMovie(movieId)
-                viewModel.getMovieDetail()?.observe(this, { movieWithDetail ->
+        intent.extras?.let {
+            it.getString(EXTRA_MOVIE)?.apply {
+                setProgressBar(true)
+                viewModel.setSelectedMovie(this)
+                viewModel.detailMovie.observe(this@DetailMovieActivity,{ movieWithDetail ->
                     if (movieWithDetail != null) {
                         when (movieWithDetail.status) {
                             Status.LOADING -> setProgressBar(true)
@@ -58,35 +57,38 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
                             }
                             Status.ERROR -> {
                                 setProgressBar(false)
-                                Toast.makeText(this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@DetailMovieActivity, "Something Wrong", Toast.LENGTH_SHORT).show()
                             }
                         }
                     }
 
-                })
+                } )
             }
         }
     }
 
     private fun populateMovie(movie: FilmEntity?) {
-        detailMovieBind }
-        detailMovieBinding.tvMovieTitle.text = movie?.title
-        detailMovieBinding.tvMovieRating.text = movie?.rating.toString()
-        detailMovieBinding.tvMovieReleased.text = movie?.released
-        detailMovieBinding.tvMovieDuration.text = movie?.duration
-        detailMovieBinding.tvMovieDesc.text = movie?.description
-        detailMovieBinding.tvMovieLanguage.text = movie?.language
-        detailMovieBinding.btnVisitMovie.setOnClickListener(this)
-        detailMovieBinding.btnShare.setOnClickListener(this)
-        detailMovieBinding.btnFav.setOnClickListener(this)
+        detailMovieBinding.apply {
+            tvMovieTitle.text = movie?.title
+            tvMovieRating.text = movie?.rating.toString()
+            tvMovieReleased.text = movie?.released
+            tvMovieDuration.text = movie?.duration
+            tvMovieDesc.text = movie?.description
+            tvMovieLanguage.text = movie?.language
+            btnVisitMovie.setOnClickListener(this@DetailMovieActivity)
+            btnShare.setOnClickListener(this@DetailMovieActivity)
+            btnFav.setOnClickListener(this@DetailMovieActivity)
 
-        Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185${movie?.imagePath}")
-            .into(detailMovieBinding.imgBgDetail)
+            Glide.with(this@DetailMovieActivity)
+                .load("https://image.tmdb.org/t/p/w185${movie?.imagePath}")
+                .into(imgBgDetail)
 
-        Glide.with(this)
-            .load("https://image.tmdb.org/t/p/w185${movie?.imagePath}")
-            .into(detailMovieBinding.imgMoviePoster)
+            Glide.with(this@DetailMovieActivity)
+                .load("https://image.tmdb.org/t/p/w185${movie?.imagePath}")
+                .into(imgMoviePoster)
+
+        }
+
 
     }
 
@@ -179,10 +181,11 @@ class DetailMovieActivity : AppCompatActivity(), View.OnClickListener {
     private fun setFavoriteMovie(){
         if(viewModel.detailMovie.value?.data?.favorite == true)showToastRemoveFromFavorite()
         else showToastAddToFavorite()
-        viewModel.getMovieDetail().observe(this,{movieWithDetail->
+        viewModel.detailMovie.observe(this,{movieWithDetail ->
             if(movieWithDetail!=null){
-                if(movieWithDetail.data!=null)
-                    filmEntity= movieWithDetail.data
+                if(movieWithDetail.data!=null){
+                    filmEntity = movieWithDetail.data
+                }
             }
         })
         viewModel.setMovieFavorite(filmEntity)

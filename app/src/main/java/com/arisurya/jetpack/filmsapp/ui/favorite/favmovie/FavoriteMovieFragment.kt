@@ -5,17 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arisurya.jetpack.filmsapp.R
 import com.arisurya.jetpack.filmsapp.databinding.FragmentFavoriteMovieBinding
-import com.arisurya.jetpack.filmsapp.ui.movie.MoviesAdapter
-import com.arisurya.jetpack.filmsapp.ui.movie.MoviesViewModel
 import com.arisurya.jetpack.filmsapp.viewmodel.ViewModelFactory
-import com.arisurya.jetpack.filmsapp.vo.Status
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -28,9 +24,10 @@ class FavoriteMovieFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        fragmentFavoriteViewBinding = FragmentFavoriteMovieBinding.inflate(layoutInflater, container,false)
+        fragmentFavoriteViewBinding =
+            FragmentFavoriteMovieBinding.inflate(layoutInflater, container, false)
         return fragmentFavoriteViewBinding.root
     }
 
@@ -39,7 +36,7 @@ class FavoriteMovieFragment : Fragment() {
 
         itemTouchHelper.attachToRecyclerView(fragmentFavoriteViewBinding.rvFavMovies)
 
-        if(activity!=null){
+        if (activity != null) {
             val factory = ViewModelFactory.getInstance(requireActivity())
             viewModel = ViewModelProvider(
                 this,
@@ -51,8 +48,8 @@ class FavoriteMovieFragment : Fragment() {
             viewModel.getFavoriteMovies().observe(this, { favMovies ->
                 if (favMovies != null) {
                     setProgressBar(false)
-                    if(favMovies.size == 0) setImageNoData(true)
-                    else setImageNoData(false)
+                    if (favMovies.size == 0) setImageNoFavorite(true)
+                    else setImageNoFavorite(false)
                     favoriteMoviesAdapter.submitList(favMovies)
                 }
             })
@@ -71,19 +68,18 @@ class FavoriteMovieFragment : Fragment() {
         else fragmentFavoriteViewBinding.progressBar.visibility = View.GONE
     }
 
-    private fun setImageNoData(state: Boolean){
-        if(state){
+    private fun setImageNoFavorite(state: Boolean) {
+        if (state) {
             fragmentFavoriteViewBinding.imgNoData.visibility = View.VISIBLE
             fragmentFavoriteViewBinding.tvEmpty.visibility = View.VISIBLE
-        }
-        else {
+        } else {
             fragmentFavoriteViewBinding.imgNoData.visibility = View.GONE
             fragmentFavoriteViewBinding.tvEmpty.visibility = View.GONE
         }
     }
 
 
-    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback(){
+    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
         override fun getMovementFlags(
             recyclerView: RecyclerView,
             viewHolder: RecyclerView.ViewHolder
@@ -98,13 +94,14 @@ class FavoriteMovieFragment : Fragment() {
         ): Boolean = true
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            if(view!=null){
+            if (view != null) {
                 val swipedPosition = viewHolder.adapterPosition
                 val filmEntity = favoriteMoviesAdapter.getSwipedData(swipedPosition)
                 filmEntity?.let { viewModel.setFavorite(it) }
 
-                val snackBar = Snackbar.make(view as View,R.string.message_cancel, Snackbar.LENGTH_LONG)
-                snackBar.setAction(R.string.message_confirm){
+                val snackBar =
+                    Snackbar.make(view as View, R.string.message_cancel, Snackbar.LENGTH_LONG)
+                snackBar.setAction(R.string.message_confirm) {
                     filmEntity?.let { viewModel.setFavorite(it) }
                 }
                 snackBar.show()

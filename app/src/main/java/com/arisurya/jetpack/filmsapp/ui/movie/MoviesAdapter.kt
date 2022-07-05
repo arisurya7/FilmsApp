@@ -13,8 +13,8 @@ import com.bumptech.glide.Glide
 
 class MoviesAdapter : PagedListAdapter<FilmEntity, MoviesAdapter.MoviesViewHolder>(DIFF_CALLBACK) {
 
-    companion object{
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>(){
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FilmEntity>() {
             override fun areItemsTheSame(oldItem: FilmEntity, newItem: FilmEntity): Boolean {
                 return oldItem.filmId == newItem.filmId
             }
@@ -26,13 +26,6 @@ class MoviesAdapter : PagedListAdapter<FilmEntity, MoviesAdapter.MoviesViewHolde
         }
     }
 
-    private var listMovies = ArrayList<FilmEntity>()
-
-    fun setMovies(movies: List<FilmEntity>?) {
-        if (movies == null) return
-        this.listMovies.clear()
-        this.listMovies.addAll(movies)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val listItemsMoviesBinding =
@@ -42,10 +35,8 @@ class MoviesAdapter : PagedListAdapter<FilmEntity, MoviesAdapter.MoviesViewHolde
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
         val movie = getItem(position)
-        if(movie!=null) holder.bind(movie)
+        if (movie != null) holder.bind(movie)
     }
-
-//    override fun getItemCount(): Int = listMovies.size
 
 
     class MoviesViewHolder(private val binding: ListItemsMoviesBinding) :

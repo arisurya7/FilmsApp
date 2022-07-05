@@ -7,6 +7,7 @@ import com.arisurya.jetpack.filmsapp.data.source.remote.StatusResponse
 import com.arisurya.jetpack.filmsapp.utils.AppExecutors
 import com.arisurya.jetpack.filmsapp.vo.Resource
 
+@Suppress("MemberVisibilityCanBePrivate")
 abstract class NetworkBoundResource<ResultType, RequestType>(private val mExecutors: AppExecutors) {
 
     private val result = MediatorLiveData<Resource<ResultType>>()
