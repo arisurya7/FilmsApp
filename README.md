@@ -15,6 +15,12 @@ https://github.com/arisurya7/FilmsApp.git
 > 4. sub 3 - consists of assignments from submission 3 (4 star)
 
 ## User Interface
+<p align="left">
+    <img src="https://user-images.githubusercontent.com/57089067/177601214-1da8e7af-835f-4293-820b-5740abe63a9c.jpg"
+        alt="Search Screen Waiting"    
+        style="margin-right: 10px;"    
+        width="700" />
+</p>
 
 
 ## Dependencies
